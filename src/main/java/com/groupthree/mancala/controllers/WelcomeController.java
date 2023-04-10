@@ -1,9 +1,9 @@
-package com.groupthree.mancala;
+package com.groupthree.mancala.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class WelcomeController {
     @FXML
     private Label welcomeText;
 

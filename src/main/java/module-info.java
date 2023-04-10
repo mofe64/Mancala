@@ -10,4 +10,6 @@ module com.groupthree.mancala {
 
     opens com.groupthree.mancala to javafx.fxml;
     exports com.groupthree.mancala;
+    exports com.groupthree.mancala.controllers;
+    opens com.groupthree.mancala.controllers to javafx.fxml;
 }
