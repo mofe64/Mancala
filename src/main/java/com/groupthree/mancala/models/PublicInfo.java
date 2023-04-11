@@ -1,2 +1,3 @@
-package com.groupthree.mancala.models;public class PublicInfo {
-}
+package com.groupthree.mancala.models;
+
+public record PublicInfo (String username, String profileImage, double winPercentage){}
