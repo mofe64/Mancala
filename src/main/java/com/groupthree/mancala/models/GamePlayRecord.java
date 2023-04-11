@@ -1,4 +1,4 @@
-package com.groupthree.mancala.user;
+package com.groupthree.mancala.models;
 
 public class GamePlayRecord {
     private int numberOfWins;
@@ -33,6 +33,18 @@ public class GamePlayRecord {
 
     public int getNumberOfGames() {
         return numberOfGames;
+    }
+
+    public void setNumberOfWins(int numberOfWins) {
+        this.numberOfWins = numberOfWins;
+    }
+
+    public void setNumberOfLosses(int numberOfLosses) {
+        this.numberOfLosses = numberOfLosses;
+    }
+
+    public void setNumberOfGames(int numberOfGames) {
+        this.numberOfGames = numberOfGames;
     }
 
     @Override

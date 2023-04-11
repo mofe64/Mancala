@@ -1,13 +1,16 @@
-package com.groupthree.mancala.user;
+package com.groupthree.mancala.models;
 
 import java.time.LocalDateTime;
 
 public class Profile {
-    private String username;
+
     private String firstname;
     private String lastname;
-    private String profileImage;
     private LocalDateTime lastLoggedIn;
+
+
+    private String username;
+    private String profileImage;
     private double winPercentage;
 
 
@@ -52,6 +55,10 @@ public class Profile {
         this.profileImage = profileImage;
     }
 
+    public PublicInfo getPublicProfile(){
+        return new PublicInfo(username, profileImage, winPercentage);
+    }
+
     public LocalDateTime getLastLoggedIn() {
         return lastLoggedIn;
     }
@@ -70,13 +77,15 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "users.Profile{" +
-                "username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
+        return "Profile{" +
+                "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", profileImage='" + profileImage + '\'' +
                 ", lastLoggedIn=" + lastLoggedIn +
+                ", username='" + username + '\'' +
+                ", profileImage='" + profileImage + '\'' +
                 ", winPercentage=" + winPercentage +
                 '}';
     }
 }
+
+
