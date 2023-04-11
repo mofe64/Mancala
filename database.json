@@ -1,0 +1,145 @@
+{
+  "players": [
+    {
+      "isApproved": false,
+      "firstname": "testFirstname1",
+      "lastname": "testLastname1",
+      "username": "testUsername1",
+      "profileImage": "testProfileImage1",
+      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": [
+        {
+          "username": "1",
+          "profileImage": "5",
+          "winPercentage": 0.0
+        },
+        {
+          "username": "2",
+          "profileImage": "2",
+          "winPercentage": 0.0
+        }
+      ]
+    },
+    {
+      "isApproved": false,
+      "firstname": "2",
+      "lastname": "3",
+      "username": "1",
+      "profileImage": "5",
+      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": [
+        {
+          "username": "testUsername1",
+          "profileImage": "testProfileImage1",
+          "winPercentage": 0.0
+        }
+      ]
+    },
+    {
+      "isApproved": false,
+      "firstname": "2",
+      "lastname": "2",
+      "username": "2",
+      "profileImage": "2",
+      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": []
+    },
+    {
+      "isApproved": false,
+      "firstname": "testFirstname1",
+      "lastname": "testLastname1",
+      "username": "testUsername11",
+      "profileImage": "testProfileImage1",
+      "lastLoggedIn": "2023-04-11T10:41:24.269711700",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": [
+        {
+          "username": "11",
+          "profileImage": "5",
+          "winPercentage": 0.0
+        },
+        {
+          "username": "22",
+          "profileImage": "2",
+          "winPercentage": 0.0
+        }
+      ]
+    },
+    {
+      "isApproved": false,
+      "firstname": "2",
+      "lastname": "3",
+      "username": "11",
+      "profileImage": "5",
+      "lastLoggedIn": "2023-04-11T10:41:24.273709800",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": [
+        {
+          "username": "testUsername11",
+          "profileImage": "testProfileImage1",
+          "winPercentage": 0.0
+        }
+      ]
+    },
+    {
+      "isApproved": false,
+      "firstname": "2",
+      "lastname": "2",
+      "username": "22",
+      "profileImage": "2",
+      "lastLoggedIn": "2023-04-11T10:41:24.273709800",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": []
+    }
+  ],
+  "admins": [
+    {
+      "firstname": "testAdmin",
+      "lastname": "testAdmin",
+      "username": "testAdmin",
+      "profileImage": "testAdmin",
+      "lastLoggedIn": "2023-04-11T10:41:24.437396900"
+    },
+    {
+      "firstname": "testAdmin",
+      "lastname": "testAdmin",
+      "username": "testAdmin11",
+      "profileImage": "testAdmin",
+      "lastLoggedIn": "2023-04-11T10:41:24.276710"
+    },
+    {
+      "firstname": "testAdmin1",
+      "lastname": "testAdmin1",
+      "username": "testAdmin12",
+      "profileImage": "testAdmin1",
+      "lastLoggedIn": "2023-04-11T10:41:24.276710"
+    }
+  ]
+}
