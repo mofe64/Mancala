@@ -1,10 +1,10 @@
 {
   "players": [
     {
-      "isApproved": false,
-      "firstname": "testFirstname1",
-      "lastname": "testLastname1",
-      "username": "testUsername1",
+      "isApproved": true,
+      "firstname": "Eyimofe",
+      "lastname": "Ogunbiyi",
+      "username": "mofe",
       "profileImage": "testProfileImage1",
       "lastLoggedIn": "2023-04-11T10:41:24.437396900",
       "gamePlayRecord": {
@@ -14,23 +14,38 @@
       },
       "favorites": [
         {
-          "username": "1",
-          "profileImage": "5",
+          "username": "JamesCoolDude",
+          "profileImage": "",
           "winPercentage": 0.0
         },
         {
-          "username": "2",
-          "profileImage": "2",
+          "username": "marthaCooks",
+          "profileImage": "",
+          "winPercentage": 0.0
+        },
+        {
+          "username": "Martian",
+          "profileImage": "",
+          "winPercentage": 0.0
+        },
+        {
+          "username": "Elsa",
+          "profileImage": "",
+          "winPercentage": 0.0
+        },
+        {
+          "username": "SomeDUDE",
+          "profileImage": "",
           "winPercentage": 0.0
         }
       ]
     },
     {
       "isApproved": false,
-      "firstname": "2",
-      "lastname": "3",
-      "username": "1",
-      "profileImage": "5",
+      "firstname": "James",
+      "lastname": "Smith",
+      "username": "JamesCoolDude",
+      "profileImage": "",
       "lastLoggedIn": "2023-04-11T10:41:24.437396900",
       "gamePlayRecord": {
         "numberOfWins": 0,
@@ -39,7 +54,7 @@
       },
       "favorites": [
         {
-          "username": "testUsername1",
+          "username": "mofe",
           "profileImage": "testProfileImage1",
           "winPercentage": 0.0
         }
@@ -47,10 +62,10 @@
     },
     {
       "isApproved": false,
-      "firstname": "2",
-      "lastname": "2",
-      "username": "2",
-      "profileImage": "2",
+      "firstname": "Martha",
+      "lastname": "Stewart",
+      "username": "marthaCooks",
+      "profileImage": "",
       "lastLoggedIn": "2023-04-11T10:41:24.437396900",
       "gamePlayRecord": {
         "numberOfWins": 0,
@@ -61,10 +76,10 @@
     },
     {
       "isApproved": false,
-      "firstname": "testFirstname1",
-      "lastname": "testLastname1",
-      "username": "testUsername11",
-      "profileImage": "testProfileImage1",
+      "firstname": "John",
+      "lastname": "Jones",
+      "username": "Martian",
+      "profileImage": "",
       "lastLoggedIn": "2023-04-11T10:41:24.269711700",
       "gamePlayRecord": {
         "numberOfWins": 0,
@@ -73,22 +88,22 @@
       },
       "favorites": [
         {
-          "username": "11",
-          "profileImage": "5",
+          "username": "marthaCooks",
+          "profileImage": "",
           "winPercentage": 0.0
         },
         {
-          "username": "22",
-          "profileImage": "2",
+          "username": "mofe",
+          "profileImage": "",
           "winPercentage": 0.0
         }
       ]
     },
     {
       "isApproved": false,
-      "firstname": "2",
-      "lastname": "3",
-      "username": "11",
+      "firstname": "Elsie",
+      "lastname": "Test",
+      "username": "Elsa",
       "profileImage": "5",
       "lastLoggedIn": "2023-04-11T10:41:24.273709800",
       "gamePlayRecord": {
@@ -96,20 +111,14 @@
         "numberOfLosses": 0,
         "numberOfGames": 0
       },
-      "favorites": [
-        {
-          "username": "testUsername11",
-          "profileImage": "testProfileImage1",
-          "winPercentage": 0.0
-        }
-      ]
+      "favorites": []
     },
     {
       "isApproved": false,
-      "firstname": "2",
-      "lastname": "2",
-      "username": "22",
-      "profileImage": "2",
+      "firstname": "Some",
+      "lastname": "Dude",
+      "username": "SomeDUDE",
+      "profileImage": "",
       "lastLoggedIn": "2023-04-11T10:41:24.273709800",
       "gamePlayRecord": {
         "numberOfWins": 0,

@@ -33,10 +33,13 @@ public class PlayerDashboardController {
     private Scene scene;
     private Parent root;
 
+    private String playerUsername;
+
     /**
      * On clicking the 'New Game Button' this will display the new game menu
      */
     public void setWelcomeText(String playerUsername) {
+        this.playerUsername = playerUsername;
         welcomeText.setText("Welcome " + playerUsername);
     }
 
@@ -64,8 +67,18 @@ public class PlayerDashboardController {
      * On clicking the 'Profile Button' this will display the player's profile screen
      */
     @FXML
-    protected void onProfileButtonClick() {
+    protected void onProfileButtonClick(ActionEvent event) throws IOException {
         System.out.println("on profile clicked ...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("player-profile-view.fxml"));
+        root = loader.load();
+        PlayerProfileController profileController = loader.getController();
+        profileController.setUpProfile(playerUsername);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+
     }
 
     /**

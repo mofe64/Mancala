@@ -66,9 +66,9 @@
          </HBox.margin>
       </VBox>
 
-      <VBox fx:id="profileRight" alignment="TOP_CENTER" prefHeight="600" prefWidth="339.0">
+      <VBox fx:id="profileRight" alignment="TOP_CENTER" prefHeight="600" prefWidth="280">
          <children>
-            <HBox alignment="TOP_CENTER">
+            <HBox>
                <Region HBox.hgrow="ALWAYS" />
                <Text text="Last Login: ">
                   <HBox.margin>
@@ -97,7 +97,7 @@
                   <Insets top="80.0" />
                </VBox.margin>
             </Text>
-            <ListView prefHeight="443.0" prefWidth="224.0" />
+            <ListView prefHeight="443.0" prefWidth="280.0" />
          </children>
          <HBox.margin>
             <Insets left="20.0" />

@@ -1,21 +1,17 @@
 package com.groupthree.mancala.repository;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
 import com.groupthree.mancala.exceptions.IllegalOperationException;
 import com.groupthree.mancala.models.Admin;
 import com.groupthree.mancala.models.Player;
+import com.groupthree.mancala.models.Schema;
 
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.groupthree.mancala.models.Schema;
-import com.groupthree.mancala.models.serializers.PlayerSerializer;
 
 public class UserRepository {
 
@@ -54,12 +50,16 @@ public class UserRepository {
         return INSTANCE;
     }
 
+    public void updatePlayer() {
+        // TODO: 15/04/2023 update player logic
+    }
+
     public boolean writeToFile() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Schema applicationSchema = new Schema(players, admins);
             File file = new File("database.json");
-            if(file.exists()  && !file.isDirectory()) {
+            if (file.exists() && !file.isDirectory()) {
                 file.delete();
             }
             objectMapper.writeValue(file, applicationSchema);
