@@ -24,7 +24,6 @@ public class UserRepository {
     private final List<Admin> admins;
 
     private UserRepository() {
-
         try {
             File f = new File("database.json");
             if (f.exists() && !f.isDirectory()) {

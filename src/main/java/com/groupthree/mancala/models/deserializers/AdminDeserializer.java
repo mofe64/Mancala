@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.groupthree.mancala.models.Admin;
-import com.groupthree.mancala.models.serializers.AdminSerializer;
 
 import java.io.IOException;
 
