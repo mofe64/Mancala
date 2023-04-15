@@ -12,8 +12,6 @@ module com.groupthree.mancala {
 
     opens com.groupthree.mancala to javafx.fxml;
     exports com.groupthree.mancala;
-    exports com.groupthree.mancala.controllers;
-    opens com.groupthree.mancala.controllers to javafx.fxml;
     opens com.groupthree.mancala.models to com.fasterxml.jackson.databind;
     opens com.groupthree.mancala.models.serializers to com.fasterxml.jackson.databind;
     opens com.groupthree.mancala.models.deserializers to com.fasterxml.jackson.databind;

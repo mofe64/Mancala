@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane prefHeight="400.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupthree.mancala.GameController">
+   <children>
+      <Circle fx:id="row1Hole1" fill="DODGERBLUE" layoutX="160.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row1Hole2" fill="DODGERBLUE" layoutX="248.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row1Hole3" fill="DODGERBLUE" layoutX="336.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row1Hole4" fill="DODGERBLUE" layoutX="426.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row1Hole5" fill="DODGERBLUE" layoutX="520.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row1Hole6" fill="DODGERBLUE" layoutX="613.0" layoutY="147.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="row1hole1Value" alignment="CENTER" layoutX="146.0" layoutY="139.0" text="Label" />
+      <Label fx:id="row1hole2Value" alignment="CENTER" layoutX="234.0" layoutY="139.0" text="Label" />
+      <Label fx:id="row1hole3Value" alignment="CENTER" layoutX="322.0" layoutY="139.0" text="Label" />
+      <Label fx:id="row1hole4Value" alignment="CENTER" layoutX="412.0" layoutY="139.0" text="Label" />
+      <Label fx:id="row1hole5Value" alignment="CENTER" layoutX="506.0" layoutY="139.0" text="Label" />
+      <Label fx:id="row1hole6Value" alignment="CENTER" layoutX="599.0" layoutY="139.0" text="Label" />
+      <Circle fx:id="row2Hole1" fill="DODGERBLUE" layoutX="160.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row2Hole2" fill="DODGERBLUE" layoutX="248.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row2Hole3" fill="DODGERBLUE" layoutX="336.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row2Hole4" fill="DODGERBLUE" layoutX="426.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row2Hole5" fill="DODGERBLUE" layoutX="520.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="row2Hole6" fill="DODGERBLUE" layoutX="613.0" layoutY="254.0" onMouseClicked="#moveMade" radius="40.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="row2hole1Value" alignment="CENTER" layoutX="146.0" layoutY="246.0" text="Label" />
+      <Label fx:id="row2hole2Value" alignment="CENTER" layoutX="234.0" layoutY="246.0" text="Label" />
+      <Label fx:id="row2hole3Value" alignment="CENTER" layoutX="322.0" layoutY="246.0" text="Label" />
+      <Label fx:id="row2hole4Value" alignment="CENTER" layoutX="412.0" layoutY="246.0" text="Label" />
+      <Label fx:id="row2hole5Value" alignment="CENTER" layoutX="507.0" layoutY="246.0" text="Label" />
+      <Label fx:id="row2hole6Value" alignment="CENTER" layoutX="599.0" layoutY="246.0" text="Label" />
+      <Label fx:id="playerOneUsername" layoutX="355.0" layoutY="57.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerTwoUsername" layoutX="355.0" layoutY="321.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Rectangle fx:id="playerOneStore" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="8.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Rectangle fx:id="payerTwoStore" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="673.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
+      <Label fx:id="playerOneStoreValue" layoutX="34.0" layoutY="179.0" text="Label" />
+      <Label fx:id="playerTwoStoreValue" layoutX="699.0" layoutY="179.0" text="Label" />
+   </children>
 </AnchorPane>
