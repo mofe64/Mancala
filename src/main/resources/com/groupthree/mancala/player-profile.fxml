@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox prefHeight="600" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="600" prefWidth="280" stylesheets="@style.css" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@pholder.jpg" />
+               </image>
+               <VBox.margin>
+                  <Insets top="32.0" />
+               </VBox.margin>
+            </ImageView>
+            <Text text="WhiteGhandalf" textAlignment="CENTER">
+               <font>
+                  <Font name="JetBrains Mono Medium Italic" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="6.0" />
+               </VBox.margin>
+            </Text>
+            <Text text="No of game played" textAlignment="CENTER">
+               <font>
+                  <Font name="JetBrains Mono Medium Italic" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="62.0" />
+               </VBox.margin></Text>
+            <Text fontSmoothingType="LCD" text="580" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Light" size="12.0" />
+               </font></Text>
+            <Text fontSmoothingType="LCD" layoutX="139.0" layoutY="275.0" text="Win Percentage" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets top="70.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Medium Italic" size="15.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="107.0" layoutY="291.0" text="10%" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font name="JetBrains Mono Light" size="12.0" />
+               </font>
+            </Text>
+         </children>
+         <HBox.margin>
+            <Insets right="20.0" />
+         </HBox.margin>
+      </VBox>
+
+      <VBox alignment="TOP_CENTER" prefHeight="600" prefWidth="280">
+         <children>
+            <HBox>
+               <Region HBox.hgrow="ALWAYS" />
+               <Text text="Last Login: ">
+                  <HBox.margin>
+                     <Insets right="2.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font name="JetBrains Mono Medium Italic" size="13.0" />
+                  </font></Text>
+               <Text layoutX="234.0" layoutY="23.0" text="12/03/2023">
+                  <HBox.margin>
+                     <Insets right="12.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font name="JetBrains Mono Medium Italic" size="13.0" />
+                  </font>
+               </Text>
+               <VBox.margin>
+                  <Insets top="12.0" />
+               </VBox.margin>
+            </HBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Favourite Players">
+               <font>
+                  <Font name="PT Mono Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="80.0" />
+               </VBox.margin>
+            </Text>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                     <font>
+                        <Font name="PT Mono Bold" size="16.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Oladele" textAlignment="CENTER">
+                     <font>
+                        <Font name="JetBrains Mono Medium" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Text>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="18.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                     <font>
+                        <Font name="PT Mono Bold" size="16.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Oluwadarasimi" textAlignment="CENTER">
+                     <font>
+                        <Font name="JetBrains Mono Medium" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Text>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="18.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                     <font>
+                        <Font name="PT Mono Bold" size="16.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="John Doe" textAlignment="CENTER">
+                     <font>
+                        <Font name="JetBrains Mono Medium" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Text>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="18.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+                     <font>
+                        <Font name="PT Mono Bold" size="16.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adebimpe" textAlignment="CENTER">
+                     <font>
+                        <Font name="JetBrains Mono Medium" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Text>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="18.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+                     <font>
+                        <Font name="PT Mono Bold" size="16.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Awori Awosanya" textAlignment="CENTER">
+                     <font>
+                        <Font name="JetBrains Mono Medium" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Text>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" text="Remove">
+                     <HBox.margin>
+                        <Insets right="16.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="18.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>
