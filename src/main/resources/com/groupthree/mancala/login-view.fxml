@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupthree.mancala.controllers.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupthree.mancala.LoginController">
    <children>
-      <Button layoutX="264.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Login" />
-      <TextField layoutX="212.0" layoutY="159.0" prefHeight="25.0" prefWidth="196.0" />
+      <Button fx:id="loginButton" layoutX="264.0" layoutY="200.0" mnemonicParsing="false" onAction="#attemptLogin" prefHeight="25.0" prefWidth="73.0" text="Login" />
+      <TextField fx:id="username" layoutX="212.0" layoutY="159.0" prefHeight="25.0" prefWidth="196.0" />
       <Label alignment="CENTER" layoutX="237.0" layoutY="65.0" prefHeight="35.0" prefWidth="127.0" text="Welcome">
          <font>
             <Font size="24.0" />
@@ -21,7 +21,7 @@
       <Group layoutX="212.0" layoutY="296.0">
          <children>
             <Label layoutY="3.0" text="Don't have an account, sign up" />
-            <Hyperlink layoutX="164.0" text="here" />
+            <Hyperlink layoutX="164.0" onAction="#goToRegister" text="here" />
          </children>
       </Group>
    </children>

@@ -32,15 +32,17 @@ public class Board {
     public Hole[][] getGameRows() {
         return gameRows;
     }
-    public Store getPlayer1Store(){
+
+    public Store getPlayer1Store() {
         return player1Store;
     }
 
-    public Store getPlayer2Store(){
+    public Store getPlayer2Store() {
         return player2Store;
     }
 
     private void moveAcrossTopRow(int from, Hole[] topRow) {
+        System.out.println("current index " + from);
         // get index of the hole we want to remove stones from
         int currentIndex = from;
         // retrieve the hole from the player row
@@ -134,10 +136,7 @@ public class Board {
                     // we return without setting playerOnTurn to false because it's still his turn
                     return;
                 }
-
-
-            }
-            if (!playerOneTurn) {
+            } else {
                 moveAcrossBottomRow(startIndex, bottomRow);
                 // if after going through the entire top row, we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -156,7 +155,6 @@ public class Board {
                 }
                 // this means that the player 2 dropped his last stone in his store, so he gets to play again
                 // we return without setting playerOnTurn to false because it's still his turn
-
             }
         } else {
             throw new IllegalArgumentException("Player One can only choose from 1 to 6");
@@ -166,7 +164,6 @@ public class Board {
     public boolean isPlayerOneTurn() {
         return playerOneTurn;
     }
-
 
 
     public void displayBoard() {

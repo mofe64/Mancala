@@ -42,8 +42,8 @@ public class Player extends User {
         this.record = record;
     }
 
-    public void removeFromFavorites(User user) {
-        favorites.remove(user);
+    public void removeFromFavorites(PublicInfo profile) {
+        favorites.remove(profile);
     }
 
     public List<PublicInfo> getFavorites() {

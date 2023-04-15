@@ -7,7 +7,8 @@ public class User {
         this.profile = new Profile(username, firstname, lastname, profileImage);
 
     }
-    public Profile getProfile(){
+
+    public Profile getProfile() {
         return this.profile;
     }
 
