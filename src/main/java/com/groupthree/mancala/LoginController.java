@@ -55,7 +55,15 @@ public class LoginController {
     }
 
     @FXML
-    public void goToRegister() {
+    public void goToRegister(ActionEvent event) throws IOException {
         System.out.println("going to register ...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        RegisterController registerController = loader.getController();
+        registerController.initializeScreen(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -3,7 +3,7 @@ package com.groupthree.mancala.repository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
-import com.groupthree.mancala.exceptions.IllegalOperationException;
+import com.groupthree.mancala.exceptions.UserExistsException;
 import com.groupthree.mancala.models.Admin;
 import com.groupthree.mancala.models.Player;
 import com.groupthree.mancala.models.Schema;
@@ -93,7 +93,7 @@ public class UserRepository {
             String errorMessage = MessageFormat
                     .format("Player with username:{0} already exists",
                             existingPlayer.getUsername());
-            throw new IllegalOperationException(errorMessage);
+            throw new UserExistsException(errorMessage);
         }
 
         players.add(player);
@@ -105,7 +105,7 @@ public class UserRepository {
             String errorMessage = MessageFormat
                     .format("Player with username:{0} already exists",
                             existingAdmin.getUsername());
-            throw new IllegalOperationException(errorMessage);
+            throw new UserExistsException(errorMessage);
         }
 
         admins.add(admin);

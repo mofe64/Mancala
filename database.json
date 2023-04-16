@@ -1,12 +1,12 @@
 {
   "players": [
     {
-      "isApproved": true,
+      "isApproved": false,
       "firstname": "Eyimofe",
       "lastname": "Ogunbiyi",
       "username": "mofe",
       "profileImage": "testProfileImage1",
-      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "lastLoggedIn": "2023-04-16T11:33:46.674237100",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -46,7 +46,7 @@
       "lastname": "Smith",
       "username": "JamesCoolDude",
       "profileImage": "",
-      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -66,7 +66,7 @@
       "lastname": "Stewart",
       "username": "marthaCooks",
       "profileImage": "",
-      "lastLoggedIn": "2023-04-11T10:41:24.437396900",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -80,7 +80,7 @@
       "lastname": "Jones",
       "username": "Martian",
       "profileImage": "",
-      "lastLoggedIn": "2023-04-11T10:41:24.269711700",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -105,7 +105,7 @@
       "lastname": "Test",
       "username": "Elsa",
       "profileImage": "5",
-      "lastLoggedIn": "2023-04-11T10:41:24.273709800",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -119,7 +119,21 @@
       "lastname": "Dude",
       "username": "SomeDUDE",
       "profileImage": "",
-      "lastLoggedIn": "2023-04-11T10:41:24.273709800",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
+      "gamePlayRecord": {
+        "numberOfWins": 0,
+        "numberOfLosses": 0,
+        "numberOfGames": 0
+      },
+      "favorites": []
+    },
+    {
+      "isApproved": false,
+      "firstname": "tade",
+      "lastname": "ogunbiyi",
+      "username": "tade",
+      "profileImage": "com/groupthree/mancala/pholder.jpg",
+      "lastLoggedIn": "2023-04-16T11:33:46.675236",
       "gamePlayRecord": {
         "numberOfWins": 0,
         "numberOfLosses": 0,
@@ -134,21 +148,21 @@
       "lastname": "testAdmin",
       "username": "testAdmin",
       "profileImage": "testAdmin",
-      "lastLoggedIn": "2023-04-11T10:41:24.437396900"
+      "lastLoggedIn": "2023-04-16T11:33:46.675236"
     },
     {
       "firstname": "testAdmin",
       "lastname": "testAdmin",
       "username": "testAdmin11",
       "profileImage": "testAdmin",
-      "lastLoggedIn": "2023-04-11T10:41:24.276710"
+      "lastLoggedIn": "2023-04-16T11:33:46.675236"
     },
     {
       "firstname": "testAdmin1",
       "lastname": "testAdmin1",
       "username": "testAdmin12",
       "profileImage": "testAdmin1",
-      "lastLoggedIn": "2023-04-11T10:41:24.276710"
+      "lastLoggedIn": "2023-04-16T11:33:46.675236"
     }
   ]
 }
