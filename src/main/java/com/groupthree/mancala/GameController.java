@@ -2,6 +2,7 @@ package com.groupthree.mancala;
 
 import com.groupthree.mancala.gameplay.Board;
 import com.groupthree.mancala.gameplay.Store;
+import com.groupthree.mancala.models.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -122,7 +123,7 @@ public class GameController {
 
     }
 
-    public void initializeNewGame() {
+    public void initializeNewGame(Player player1, Player player2) {
         updateStones();
     }
 
