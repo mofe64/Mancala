@@ -3,6 +3,7 @@ package com.groupthree.mancala.repository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
+import com.groupthree.mancala.exceptions.NotFoundException;
 import com.groupthree.mancala.exceptions.UserExistsException;
 import com.groupthree.mancala.models.Admin;
 import com.groupthree.mancala.models.Player;
@@ -50,9 +51,19 @@ public class UserRepository {
         return INSTANCE;
     }
 
-    public void updatePlayer() {
-        // TODO: 15/04/2023 update player logic
+    public void updatePlayer(String username, Player updatedPlayer) {
+
+        Player player = getPlayer(username);
+        if (player == null) {
+            throw new NotFoundException("No Player found with username: " + username);
+        }
+        players.remove(player);
+        players.add(updatedPlayer);
     }
+
+    public void updateAdmin(String username, Admin admin) {
+    }
+
 
     public boolean writeToFile() {
         try {

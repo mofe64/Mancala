@@ -2,6 +2,7 @@ package com.groupthree.mancala;
 
 import com.groupthree.mancala.models.Player;
 import com.groupthree.mancala.models.PublicInfo;
+import com.groupthree.mancala.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -26,6 +27,7 @@ public abstract class ProfileCell extends ListCell<PublicInfo> {
                 player.removeFromFavorites(info);
                 System.out.println("Action: " + getItem());
                 updateList();
+                UserRepository.getInstance().updatePlayer(player.getUsername(), player);
             }
         });
         name = new Label();

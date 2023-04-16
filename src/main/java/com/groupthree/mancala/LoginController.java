@@ -1,15 +1,14 @@
 package com.groupthree.mancala;
 
 import com.groupthree.mancala.repository.UserRepository;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -50,7 +49,9 @@ public class LoginController {
             System.out.println("found admin");
             return;
         }
-        System.out.println(" not found display error ");
+        var alert = new Alert(Alert.AlertType.ERROR, "No user found with username: " + usernameValue);
+        alert.setTitle("Login Error");
+        alert.showAndWait();
 
     }
 
