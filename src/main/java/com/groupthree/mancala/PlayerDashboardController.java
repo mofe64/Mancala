@@ -17,13 +17,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * PlayerDashboardController is a class that manages click actions on the player dashboard screen
  *
  * @author Yebo Ajakpo
- * @version 1.0
+ * @author Mofe
+ * @version 2.0
  */
 public class PlayerDashboardController {
 

@@ -12,6 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
+
+/**
+ * Profile Cell represents a custom list cell containing a users to be displayed within a list view
+ * @author Mofe
+ * @version 1.0
+ */
 public abstract class ProfileCell extends ListCell<PublicInfo> {
     private final Label name;
     private final HBox hBox;
