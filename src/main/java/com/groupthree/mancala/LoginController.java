@@ -47,6 +47,14 @@ public class LoginController {
         var admin = userRepo.getAdmin(usernameValue);
         if (admin != null) {
             System.out.println("found admin");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-dashboard-view.fxml"));
+            root = loader.load();
+            AdminDashboardController controller = loader.getController();
+            controller.initializeScreen(admin.getUsername());
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
             return;
         }
         var alert = new Alert(Alert.AlertType.ERROR, "No user found with username: " + usernameValue);

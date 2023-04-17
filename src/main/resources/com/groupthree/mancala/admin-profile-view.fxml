@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupthree.mancala.AdminProfileController">
+   <children>
+      <ImageView fx:id="profilePicture" fitHeight="283.0" fitWidth="200.0" layoutX="29.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pholder.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="293.0" layoutY="101.0" text="Firstname " />
+      <Label layoutX="293.0" layoutY="151.0" text="Lastname" />
+      <Label layoutX="293.0" layoutY="202.0" text="Username" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Label fx:id="lastLogin" layoutX="292.0" layoutY="30.0" text="Last Login " />
+      <TextField fx:id="firstname" layoutX="293.0" layoutY="118.0" prefHeight="25.0" prefWidth="215.0" />
+      <TextField fx:id="lastname" layoutX="293.0" layoutY="168.0" prefHeight="25.0" prefWidth="215.0" />
+      <TextField fx:id="username" layoutX="293.0" layoutY="218.0" prefHeight="25.0" prefWidth="215.0" />
+      <Button fx:id="updateProfileDetailsButton" layoutX="457.0" layoutY="268.0" mnemonicParsing="false" onAction="#updateUserDetails" text="Update" />
+      <Button fx:id="profileImageButton" layoutX="64.0" layoutY="268.0" mnemonicParsing="false" onAction="#updateProfileImage" text="Change Profile Image" />
+   </children>
+</AnchorPane>

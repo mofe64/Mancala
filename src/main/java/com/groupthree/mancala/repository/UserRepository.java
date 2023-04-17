@@ -7,12 +7,14 @@ import com.groupthree.mancala.exceptions.NotFoundException;
 import com.groupthree.mancala.exceptions.UserExistsException;
 import com.groupthree.mancala.models.Admin;
 import com.groupthree.mancala.models.Player;
+import com.groupthree.mancala.models.PublicInfo;
 import com.groupthree.mancala.models.Schema;
 
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserRepository {
 
@@ -49,6 +51,21 @@ public class UserRepository {
             INSTANCE = new UserRepository();
         }
         return INSTANCE;
+    }
+
+    public void approvePlayer(String username) {
+        Player player = getPlayer(username);
+        if (player == null) {
+            throw new NotFoundException("No player found with username " + username);
+        }
+        player.setApproved(true);
+    }
+
+    public List<PublicInfo> getAllPlayersPendingApproval() {
+        return players.stream()
+                .filter(player -> !player.isApproved())
+                .map(player -> player.getProfile().getPublicProfile())
+                .collect(Collectors.toList());
     }
 
     public void updatePlayer(String username, Player updatedPlayer) {
