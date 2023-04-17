@@ -1,13 +1,19 @@
 package com.groupthree.mancala;
 
+import com.groupthree.mancala.models.Player;
+import com.groupthree.mancala.repository.UserRepository;
+import com.groupthree.mancala.util.ApplicationContextManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,7 +22,8 @@ import java.io.IOException;
  * PlayerDashboardController is a class that manages click actions on the player dashboard screen
  *
  * @author Yebo Ajakpo
- * @version 1.0
+ * @author Mofe
+ * @version 2.0
  */
 public class PlayerDashboardController {
 
@@ -44,25 +51,66 @@ public class PlayerDashboardController {
     }
 
     @FXML
-    protected void onNewGameButtonClick(ActionEvent event) throws IOException {
+    protected void onNewGameButtonClick(ActionEvent event) {
+        var userRepo = UserRepository.getInstance();
         MenuItem selectedItem = (MenuItem) event.getSource();
         if (selectedItem.getId().equalsIgnoreCase("arcade")) {
             System.out.println("Arcade mode selected ...");
         } else if (selectedItem.getId().equalsIgnoreCase("normal")) {
             System.out.println("normal mode selected ...");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
-            root = loader.load();
+            stage = (Stage) welcomeText.getScene().getWindow();
 
-            GameController gameController = loader.getController();
-            gameController.initializeNewGame();
+            Player player1 = userRepo.getPlayer(playerUsername);
 
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            // Show pop up to get player2 details;
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(stage);
+            Label explanation = new Label("Enter the username of the second player");
+            TextField usernameTextField = new TextField();
+            Button startButton = new Button("Start Game");
+            VBox dialogVbox = new VBox(explanation, usernameTextField, startButton);
+            dialogVbox.setSpacing(10);
+            dialogVbox.setPadding(new Insets(20));
+            dialogVbox.setAlignment(Pos.CENTER);
+            startButton.setOnAction(e -> {
+                var secondPlayerUsername = usernameTextField.getText();
+                if (secondPlayerUsername == null || secondPlayerUsername.isEmpty()) {
+                    var alert = new Alert(Alert.AlertType.ERROR, "Please provide the username for the second player");
+                    alert.setTitle("Start Game Error");
+                    alert.showAndWait();
+                }
+                var player2 = userRepo.getPlayer(secondPlayerUsername);
+                if (player2 == null) {
+                    var alert = new Alert(Alert.AlertType.ERROR, "No Player found with that username");
+                    alert.setTitle("Start Game Error");
+                    alert.showAndWait();
+                } else {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
+                        root = loader.load();
+                        GameController gameController = loader.getController();
+                        gameController.initializeNewGame(player1, player2);
+                        stage = (Stage) welcomeText.getScene().getWindow();
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        dialog.close();
+                        stage.show();
+
+                    } catch (Exception exception) {
+                        System.out.println(exception.getMessage());
+                        var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
+                        alert.setTitle("Start Game Error");
+                        alert.showAndWait();
+                    }
+                }
+            });
+
+            Scene dialogScene = new Scene(dialogVbox, 300, 300);
+            dialog.setScene(dialogScene);
+            dialog.show();
         }
     }
-
     /**
      * On clicking the 'Profile Button' this will display the player's profile screen
      */
@@ -74,6 +122,9 @@ public class PlayerDashboardController {
         PlayerProfileController profileController = loader.getController();
         profileController.setUpProfile(playerUsername);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        var context = ApplicationContextManager.getInstance();
+        context.addStage(stage);
+        context.addView("player-dashboard-view.fxml");
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

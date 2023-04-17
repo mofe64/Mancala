@@ -19,6 +19,13 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    @Override
+    public void stop() {
+        System.out.println("Stage is closing");
+        var userRepo = UserRepository.getInstance();
+        userRepo.writeToFile();
+    }
+
     public static void main(String[] args) {
         launch();
     }

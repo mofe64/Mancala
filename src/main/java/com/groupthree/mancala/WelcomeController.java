@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,8 +15,6 @@ import java.io.IOException;
  * @version 1.0
  */
 public class WelcomeController {
-    @FXML
-    private Label welcomeText;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -41,8 +38,16 @@ public class WelcomeController {
     /** On clicking the 'Sign Up Button' this will capture the user details and save it.
      */
     @FXML
-    public void register(ActionEvent event) {
+    public void register(ActionEvent event) throws IOException {
         System.out.println("register called");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        RegisterController registerController = loader.getController();
+        registerController.initializeScreen(stage);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

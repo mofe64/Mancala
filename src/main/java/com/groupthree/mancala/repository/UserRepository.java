@@ -3,15 +3,18 @@ package com.groupthree.mancala.repository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
-import com.groupthree.mancala.exceptions.IllegalOperationException;
+import com.groupthree.mancala.exceptions.NotFoundException;
+import com.groupthree.mancala.exceptions.UserExistsException;
 import com.groupthree.mancala.models.Admin;
 import com.groupthree.mancala.models.Player;
+import com.groupthree.mancala.models.PublicInfo;
 import com.groupthree.mancala.models.Schema;
 
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserRepository {
 
@@ -50,9 +53,34 @@ public class UserRepository {
         return INSTANCE;
     }
 
-    public void updatePlayer() {
-        // TODO: 15/04/2023 update player logic
+    public void approvePlayer(String username) {
+        Player player = getPlayer(username);
+        if (player == null) {
+            throw new NotFoundException("No player found with username " + username);
+        }
+        player.setApproved(true);
     }
+
+    public List<PublicInfo> getAllPlayersPendingApproval() {
+        return players.stream()
+                .filter(player -> !player.isApproved())
+                .map(player -> player.getProfile().getPublicProfile())
+                .collect(Collectors.toList());
+    }
+
+    public void updatePlayer(String username, Player updatedPlayer) {
+
+        Player player = getPlayer(username);
+        if (player == null) {
+            throw new NotFoundException("No Player found with username: " + username);
+        }
+        players.remove(player);
+        players.add(updatedPlayer);
+    }
+
+    public void updateAdmin(String username, Admin admin) {
+    }
+
 
     public boolean writeToFile() {
         try {
@@ -93,7 +121,7 @@ public class UserRepository {
             String errorMessage = MessageFormat
                     .format("Player with username:{0} already exists",
                             existingPlayer.getUsername());
-            throw new IllegalOperationException(errorMessage);
+            throw new UserExistsException(errorMessage);
         }
 
         players.add(player);
@@ -105,7 +133,7 @@ public class UserRepository {
             String errorMessage = MessageFormat
                     .format("Player with username:{0} already exists",
                             existingAdmin.getUsername());
-            throw new IllegalOperationException(errorMessage);
+            throw new UserExistsException(errorMessage);
         }
 
         admins.add(admin);

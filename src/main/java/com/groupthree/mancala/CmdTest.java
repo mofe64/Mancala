@@ -12,6 +12,8 @@ public class CmdTest {
         board.moveStones(6);
         board.displayBoard();
         System.out.println(board.isPlayerOneTurn());
+        board.moveStones(6);
+        System.out.println(board.isPlayerOneTurn());
 
 //        Player player = new Player("testUsername11",
 //                "testFirstname1",

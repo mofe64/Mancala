@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupthree.mancala.AdminDashboardController">
+    <children>
+        <Label fx:id="welcomeText" layoutX="182.0" layoutY="37.0" text="Welcome Adminname ">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <Group layoutX="182.0" layoutY="124.0">
+            <children>
+                <Button layoutX="130.0" mnemonicParsing="false" onAction="#onProfileButtonClick" prefHeight="25.0" prefWidth="78.0" text="Profile" />
+                <Label layoutY="4.0" text="View your profile" />
+            </children>
+        </Group>
+        <Group layoutX="182.0" layoutY="162.0">
+            <children>
+                <Button layoutX="130.0" mnemonicParsing="false" onAction="#onGameStatsClick" prefHeight="25.0" prefWidth="100.0" text="Game Stats" />
+                <Label layoutY="4.0" text="View Game Stats" />
+            </children>
+        </Group>
+      <HBox fx:id="playerApprovalContainer" alignment="CENTER" layoutX="10.0" layoutY="208.0" prefHeight="178.0" prefWidth="578.0" />
+    </children>
+</AnchorPane>
