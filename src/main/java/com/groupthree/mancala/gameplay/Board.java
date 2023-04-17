@@ -1,6 +1,7 @@
 package com.groupthree.mancala.gameplay;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -8,8 +9,8 @@ public class Board {
     private final Store player1Store;
     private final Store player2Store;
     private boolean playerOneTurn;
+    private boolean gameOver;
     List<Stone> stonesInHand = new ArrayList<>();
-    //TODO if stones in hand finishes in user store
 
     public Board() {
         playerOneTurn = true;
@@ -51,7 +52,8 @@ public class Board {
         if (stonesInHand.isEmpty()) {
             // remove all stones in the current hole and place them in hand
             stonesInHand = hole.removeStones();
-            // increment start index for loop since we have already removed stones from the current hole
+            // decrement start index for loop since we have already removed stones from the current hole
+            // since we are in the top row, we move counter clock wise, so we decrement
             currentIndex = currentIndex - 1;
         }
         // since we are in the first row to move counter clock wise, we need to
@@ -81,6 +83,56 @@ public class Board {
         }
     }
 
+    private void checkIfGameOver() {
+        System.out.println("board checking ......");
+        gameOver = true;
+        Hole[] topRow = gameRows[0];
+        Hole[] bottomRow = gameRows[1];
+        System.out.println("top row");
+        System.out.println(Arrays.toString(topRow));
+        System.out.println("bottom row");
+        System.out.println(Arrays.toString(bottomRow));
+        for (Hole hole : topRow) {
+            if (!hole.isEmpty()) {
+                gameOver = false;
+                break;
+            }
+        }
+        if (gameOver) {
+            System.out.println("Game is over, board check method ...");
+            dumpStones(0);
+            return;
+        }
+
+        for (Hole hole : bottomRow) {
+            if (!hole.isEmpty()) {
+                gameOver = false;
+                break;
+            }
+        }
+        if (gameOver) {
+            System.out.println("Game is over, board check method ...");
+            dumpStones(1);
+        }
+    }
+
+    private void dumpStones(int emptyRow) {
+        if (emptyRow == 0) {
+            Hole[] rowToDump = gameRows[1];
+            for (Hole hole : rowToDump) {
+                var stones = hole.removeStones();
+                player2Store.addStoneToStore(stones);
+            }
+        }
+        if (emptyRow == 1) {
+            Hole[] rowToDump = gameRows[0];
+            for (Hole hole : rowToDump) {
+                var stones = hole.removeStones();
+                player1Store.addStoneToStore(stones);
+            }
+        }
+    }
+
     private void moveAcrossBottomRow(int from, Hole[] bottomRow) {
         int currentIndex = from;
         // retrieve the hole from the player row
@@ -90,7 +142,8 @@ public class Board {
             // remove all stones in the current hole and place them in hand
             stonesInHand = hole.removeStones();
             // increment start index for loop since we have already removed stones from the current hole
-            currentIndex = currentIndex - 1;
+            // since we are in the top row, we move clock wise, so we increment
+            currentIndex = currentIndex + 1;
         }
         // distribute stones across the second row
         for (int i = currentIndex; i < bottomRow.length; i++) {
@@ -111,6 +164,11 @@ public class Board {
     }
 
     public void moveStones(int from) {
+        checkIfGameOver();
+        if (gameOver) {
+            System.out.println("Game is over .... from board ");
+            return;
+        }
         Hole[] topRow = gameRows[0];
         Hole[] bottomRow = gameRows[1];
         if (from > 0 && from < 7) {
@@ -137,6 +195,8 @@ public class Board {
                     return;
                 }
             } else {
+                System.out.println("player 2 turn");
+                System.out.println("current index " + startIndex);
                 moveAcrossBottomRow(startIndex, bottomRow);
                 // if after going through the entire top row, we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -146,7 +206,7 @@ public class Board {
                 }
                 // if after adding stone to store we still have stones in hand
                 if (stonesInHand.size() > 0) {
-                    moveAcrossTopRow(6, bottomRow);
+                    moveAcrossTopRow(5, topRow);
                     // if after distributing across second row we still have stones in hand,
                     // start process again from
                     if (stonesInHand.size() > 0) {
@@ -177,12 +237,21 @@ public class Board {
         System.out.println("player2Store {" + player2Store.getNumberOfStonesInStore() + "}");
     }
 
-    public boolean checkIfGameOver() {
-        return false;
+
+    public boolean gameOver() {
+        return gameOver;
     }
 
-    public int getWinner() {
-        return -1;
+    public int checkWinner() {
+        var player1Count = player1Store.getNumberOfStonesInStore();
+        var player2Count = player2Store.getNumberOfStonesInStore();
+        if (player1Count > player2Count) {
+            return 1;
+        } else if (player1Count == player2Count) {
+            return 0;
+        } else {
+            return 2;
+        }
     }
 
 

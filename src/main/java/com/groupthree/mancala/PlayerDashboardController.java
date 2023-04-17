@@ -98,6 +98,7 @@ public class PlayerDashboardController {
                         stage.show();
 
                     } catch (Exception exception) {
+                        System.out.println(exception.getMessage());
                         var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
                         alert.setTitle("Start Game Error");
                         alert.showAndWait();
