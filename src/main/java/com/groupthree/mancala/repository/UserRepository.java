@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
 import com.groupthree.mancala.exceptions.NotFoundException;
 import com.groupthree.mancala.exceptions.UserExistsException;
-import com.groupthree.mancala.models.Admin;
-import com.groupthree.mancala.models.Player;
-import com.groupthree.mancala.models.PublicInfo;
-import com.groupthree.mancala.models.Schema;
+import com.groupthree.mancala.models.*;
 
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +66,15 @@ public class UserRepository {
                 .collect(Collectors.toList());
     }
 
+    public List<Player> getPlayerRankings() {
+        var allPlayers = this.players;
+        allPlayers.sort(Comparator.comparing(
+                player -> player.getRecord().getNumberOfWins(),
+                Comparator.reverseOrder())
+        );
+        return allPlayers;
+    }
+
     public void updatePlayer(String username, Player updatedPlayer) {
 
         Player player = getPlayer(username);
@@ -82,7 +89,7 @@ public class UserRepository {
     }
 
 
-    public boolean writeToFile() {
+    public void writeToFile() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Schema applicationSchema = new Schema(players, admins);
@@ -91,10 +98,8 @@ public class UserRepository {
                 file.delete();
             }
             objectMapper.writeValue(file, applicationSchema);
-            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return false;
         }
     }
 

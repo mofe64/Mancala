@@ -111,6 +111,7 @@ public class PlayerDashboardController {
             dialog.show();
         }
     }
+
     /**
      * On clicking the 'Profile Button' this will display the player's profile screen
      */
@@ -136,7 +137,18 @@ public class PlayerDashboardController {
      * On clicking the 'Leader Board Button' this will display the Leader board screen
      */
     @FXML
-    protected void onLeaderboardButtonClick() {
+    protected void onLeaderboardButtonClick(ActionEvent event) throws IOException {
         System.out.println("on leaderboard clicked ...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("leaderboard-view.fxml"));
+        root = loader.load();
+        LeaderboardController controller = loader.getController();
+        controller.initializeScreen(playerUsername);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        var context = ApplicationContextManager.getInstance();
+        context.addStage(stage);
+        context.addView("player-dashboard-view.fxml");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
