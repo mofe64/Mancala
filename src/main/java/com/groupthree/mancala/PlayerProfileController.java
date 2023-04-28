@@ -77,6 +77,7 @@ public class PlayerProfileController {
         }
 
         this.noOfGames.setText("Games played: " + playerRecord.getNumberOfGames());
+        //Todo (set win percentage to two decimal places)
         double winPercentage = playerRecord.getNumberOfGames() == 0 ? 0.0
                 : (double) (playerRecord.getNumberOfWins() * 100) / playerRecord.getNumberOfGames();
 
