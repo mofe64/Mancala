@@ -69,7 +69,9 @@ public class PlayerDashboardController {
             Label explanation = new Label("Enter the username of the second player");
             TextField usernameTextField = new TextField();
             Button startButton = new Button("Start Game");
-            VBox dialogVbox = new VBox(explanation, usernameTextField, startButton);
+            Label helper = new Label("Or");
+            Button startGameWithComputer = new Button("Play against computer");
+            VBox dialogVbox = new VBox(explanation, usernameTextField, startButton, helper, startGameWithComputer);
             dialogVbox.setSpacing(10);
             dialogVbox.setPadding(new Insets(20));
             dialogVbox.setAlignment(Pos.CENTER);
@@ -103,6 +105,26 @@ public class PlayerDashboardController {
                         alert.setTitle("Start Game Error");
                         alert.showAndWait();
                     }
+                }
+            });
+            startGameWithComputer.setOnAction(e -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
+                    root = loader.load();
+                    GameController gameController = loader.getController();
+                    Player computer = new Player("computer", "", "", "");
+                    gameController.initializeNewGame(player1, computer);
+                    stage = (Stage) welcomeText.getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    dialog.close();
+                    stage.show();
+
+                } catch (Exception exception) {
+                    System.out.println(exception.getMessage());
+                    var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
+                    alert.setTitle("Start Game Error");
+                    alert.showAndWait();
                 }
             });
 

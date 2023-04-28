@@ -4,6 +4,8 @@ import com.groupthree.mancala.gameplay.Board;
 import com.groupthree.mancala.gameplay.Hole;
 import com.groupthree.mancala.gameplay.Store;
 import com.groupthree.mancala.models.Player;
+import javafx.animation.PauseTransition;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,83 +14,86 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameController {
     @FXML
-    Label row1hole1Value;
+    private Label row1hole1Value;
     @FXML
-    Label row1hole2Value;
+    private Label row1hole2Value;
     @FXML
-    Label row1hole3Value;
+    private Label row1hole3Value;
     @FXML
-    Label row1hole4Value;
+    private Label row1hole4Value;
     @FXML
-    Label row1hole5Value;
+    private Label row1hole5Value;
     @FXML
-    Label row1hole6Value;
+    private Label row1hole6Value;
     @FXML
-    Label row2hole1Value;
+    private Label row2hole1Value;
     @FXML
-    Label row2hole2Value;
+    private Label row2hole2Value;
     @FXML
-    Label row2hole3Value;
+    private Label row2hole3Value;
     @FXML
-    Label row2hole4Value;
+    private Label row2hole4Value;
     @FXML
-    Label row2hole5Value;
+    private Label row2hole5Value;
     @FXML
-    Label row2hole6Value;
+    private Label row2hole6Value;
 
     @FXML
-    Circle row1Hole1;
+    private Circle row1Hole1;
     @FXML
-    Circle row1Hole2;
+    private Circle row1Hole2;
     @FXML
-    Circle row1Hole3;
+    private Circle row1Hole3;
     @FXML
-    Circle row1Hole4;
+    private Circle row1Hole4;
     @FXML
-    Circle row1Hole5;
+    private Circle row1Hole5;
     @FXML
-    Circle row1Hole6;
+    private Circle row1Hole6;
     @FXML
-    Circle row2Hole1;
+    private Circle row2Hole1;
     @FXML
-    Circle row2Hole2;
+    private Circle row2Hole2;
     @FXML
-    Circle row2Hole3;
+    private Circle row2Hole3;
     @FXML
-    Circle row2Hole4;
+    private Circle row2Hole4;
     @FXML
-    Circle row2Hole5;
+    private Circle row2Hole5;
     @FXML
-    Circle row2Hole6;
+    private Circle row2Hole6;
 
     @FXML
-    Label playerOneUsername;
+    private Label playerOneUsername;
 
     @FXML
-    Rectangle playerOneStore;
+    private Rectangle playerOneStore;
     @FXML
-    Label playerOneStoreValue;
+    private Label playerOneStoreValue;
 
     @FXML
-    Rectangle payerTwoStore;
+    private Rectangle payerTwoStore;
     @FXML
-    Label playerTwoStoreValue;
+    private Label playerTwoStoreValue;
 
     @FXML
-    Label playerTwoUsername;
+    private Label playerTwoUsername;
 
     @FXML
-    Button endGame;
+    private Button endGame;
 
     private List<Circle> topRow;
     private List<Circle> bottomRow;
@@ -97,6 +102,7 @@ public class GameController {
     private Player player2;
     private final Board board;
     //Todo fix game ends with user playing into store bug
+    // Todo fix computer making moves with disabled values
 
     public GameController() {
         this.board = new Board();
@@ -105,7 +111,6 @@ public class GameController {
     @FXML
     private void moveMade(MouseEvent event) {
         Circle hole = (Circle) event.getSource();
-        row2Hole1.setDisable(true);
         String id = hole.getId();
         switch (id) {
             case "row1Hole1", "row2Hole1" -> makeMove(1);
@@ -118,14 +123,45 @@ public class GameController {
         updateStones();
         updateScene();
         checkIfWinnerAndUpdateRecord();
+        if (!board.isPlayerOneTurn() && player2.getUsername().equalsIgnoreCase("computer")) {
+            makeComputerMove();
+        }
+    }
 
+    private void makeComputerMove() {
+        playerTwoUsername.setText("Computer Playing ... ");
+        Random random = new Random();
+        List<Integer> possibleMoves = new ArrayList<>();
+        var bottomGameRow = board.getGameRows()[1];
+        for (int i = 0; i < bottomGameRow.length; i++) {
+            var hole = bottomGameRow[i];
+            if (!hole.isEmpty()) {
+                possibleMoves.add(i);
+            }
+        }
+
+        if (possibleMoves.size() == 0) {
+            return;
+        }
+
+        var num = random.nextInt(possibleMoves.size() - 1 + 1) + 1;
+        var validIndex = possibleMoves.get(num - 1);
+        var randomSpot = bottomRow.get(validIndex);
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> {
+            Event.fireEvent(randomSpot, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                    0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                    true, true, true, true, true, true, null));
+            playerTwoUsername.setText("Computer");
+        });
+        delay.play();
     }
 
 
     private void checkIfWinnerAndUpdateRecord() {
-        System.out.println("checking for winner");
+//        System.out.println("checking for winner");
         if (board.gameOver()) {
-            System.out.println("winner found");
+//            System.out.println("winner found");
             String message = "";
             var winner = board.checkWinner();
             if (winner == 1) {
@@ -140,8 +176,16 @@ public class GameController {
 
             var alert = new Alert(Alert.AlertType.INFORMATION, message);
             alert.setTitle("Game Over");
-            alert.showAndWait();
+            alert.show();
             updatePlayerRecords(winner);
+            topRow.forEach(hole -> {
+                hole.setDisable(true);
+                hole.setOpacity(0.2);
+            });
+            bottomRow.forEach(hole -> {
+                hole.setDisable(true);
+                hole.setOpacity(0.3);
+            });
             endGame.setVisible(true);
             endGame.setOnAction(e -> {
                 try {
@@ -173,7 +217,6 @@ public class GameController {
             playerOneRecord.incrementWins();
             playerTwoRecord.incrementLosses();
         }
-
         if (winner == 2) {
             playerTwoRecord.incrementWins();
             playerOneRecord.incrementLosses();

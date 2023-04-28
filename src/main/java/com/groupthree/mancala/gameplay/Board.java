@@ -43,7 +43,7 @@ public class Board {
     }
 
     private void moveAcrossTopRow(int from, Hole[] topRow) {
-        System.out.println("current index " + from);
+//        System.out.println("current index " + from);
         // get index of the hole we want to remove stones from
         int currentIndex = from;
         // retrieve the hole from the player row
@@ -84,14 +84,10 @@ public class Board {
     }
 
     private void checkIfGameOver() {
-        System.out.println("board checking ......");
+
         gameOver = true;
         Hole[] topRow = gameRows[0];
         Hole[] bottomRow = gameRows[1];
-        System.out.println("top row");
-        System.out.println(Arrays.toString(topRow));
-        System.out.println("bottom row");
-        System.out.println(Arrays.toString(bottomRow));
         for (Hole hole : topRow) {
             if (!hole.isEmpty()) {
                 gameOver = false;
@@ -99,7 +95,6 @@ public class Board {
             }
         }
         if (gameOver) {
-            System.out.println("Game is over, board check method ...");
             dumpStones(0);
             return;
         }
@@ -111,7 +106,7 @@ public class Board {
             }
         }
         if (gameOver) {
-            System.out.println("Game is over, board check method ...");
+//            System.out.println("Game is over, board check method ...");
             dumpStones(1);
         }
     }
@@ -166,7 +161,7 @@ public class Board {
     public void moveStones(int from) {
         checkIfGameOver();
         if (gameOver) {
-            System.out.println("Game is over .... from board ");
+//            System.out.println("Game is over .... from board ");
             return;
         }
         Hole[] topRow = gameRows[0];
@@ -195,8 +190,8 @@ public class Board {
                     return;
                 }
             } else {
-                System.out.println("player 2 turn");
-                System.out.println("current index " + startIndex);
+//                System.out.println("player 2 turn");
+//                System.out.println("current index " + startIndex);
                 moveAcrossBottomRow(startIndex, bottomRow);
                 // if after going through the entire top row, we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -239,6 +234,7 @@ public class Board {
 
 
     public boolean gameOver() {
+        checkIfGameOver();
         return gameOver;
     }
 
