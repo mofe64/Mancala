@@ -101,8 +101,6 @@ public class GameController {
     private Player player1;
     private Player player2;
     private final Board board;
-    //Todo fix game ends with user playing into store bug
-    // Todo fix computer making moves with disabled values
 
     public GameController() {
         this.board = new Board();
