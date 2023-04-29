@@ -135,9 +135,14 @@ public class GameController {
         updateStones();
         updateScene();
         checkIfWinnerAndUpdateRecord();
+        System.out.println("before calling continue turn " + board.isPlayerOneTurn());
         if (playerOneAppliedDoublePoints) {
             doublePoints(1);
             updateStones();
+        }
+        if (playerOneAppliedContinueTurn) {
+            continueTurn(1);
+            updateScene();
         }
         if (!board.isPlayerOneTurn() && player2.getUsername().equalsIgnoreCase("computer")) {
             makeComputerMove();
@@ -146,7 +151,11 @@ public class GameController {
             doublePoints(2);
             updateStones();
         }
-
+        if (playerTwoAppliedContinueTurn) {
+            continueTurn(2);
+            updateScene();
+        }
+        System.out.println("after calling continue turn " + board.isPlayerOneTurn());
 
     }
 
@@ -254,6 +263,33 @@ public class GameController {
         playerTwoAppliedDoublePoints = true;
     }
 
+    @FXML
+    private void playerOneContinueTurn() {
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.CONTINUE_TURN, 1)) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Power Up used - Continue turn");
+        alert.setContentText("Player 1 will get another turn");
+        alert.showAndWait();
+        playerOneAppliedContinueTurn = true;
+    }
+
+    @FXML
+    private void playerTwoContinueTurn() {
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.CONTINUE_TURN, 2)) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Power Up used - Continue turn");
+        alert.setContentText("Player 2 will get another turn");
+        alert.showAndWait();
+        playerTwoAppliedContinueTurn = true;
+
+    }
+
     private void doublePoints(int playerNumber) {
         if (!isArcade) {
             return;
@@ -284,6 +320,33 @@ public class GameController {
         a.setContentText(message);
         a.show();
         board.resetTurnPoints();
+    }
+
+    private void continueTurn(int playerNumber) {
+        if (!isArcade) {
+            return;
+        }
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.CONTINUE_TURN, playerNumber)) {
+            return;
+        }
+        String message = "";
+        var statManager = StatManager.getInstance();
+        if (playerNumber == 1) {
+            arcadeBoard.setPlayerOneTurn(true);
+            message = "player 1 extra turn";
+            arcadeBoard.usePowerUp(PowerUp.CONTINUE_TURN, 1);
+            statManager.updatePowerUpUseCount(PowerUp.CONTINUE_TURN, 1);
+        }
+        if (playerNumber == 2) {
+            arcadeBoard.setPlayerOneTurn(false);
+            message = "player 2 extra turn";
+            arcadeBoard.usePowerUp(PowerUp.CONTINUE_TURN, 2);
+            statManager.updatePowerUpUseCount(PowerUp.CONTINUE_TURN, 1);
+        }
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText(message);
+        a.show();
     }
 
     private void updatePlayerRecords(int winner) {
@@ -361,6 +424,14 @@ public class GameController {
 
             if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, 2)) {
                 playerTwoDPPowerUp.setDisable(true);
+            }
+
+            if (arcadeBoard.getPowerUpStatus(PowerUp.CONTINUE_TURN, 1)) {
+                playerOneCTPowerUp.setDisable(true);
+            }
+
+            if (arcadeBoard.getPowerUpStatus(PowerUp.CONTINUE_TURN, 2)) {
+                playerTwoCTPowerUp.setDisable(true);
             }
         }
     }

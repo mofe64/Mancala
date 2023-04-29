@@ -257,5 +257,9 @@ public class Board {
         }
     }
 
+    public void setPlayerOneTurn(boolean val) {
+        this.playerOneTurn = val;
+    }
+
 
 }
