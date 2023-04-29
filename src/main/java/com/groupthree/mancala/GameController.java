@@ -1,9 +1,8 @@
 package com.groupthree.mancala;
 
-import com.groupthree.mancala.gameplay.Board;
-import com.groupthree.mancala.gameplay.Hole;
-import com.groupthree.mancala.gameplay.Store;
+import com.groupthree.mancala.gameplay.*;
 import com.groupthree.mancala.models.Player;
+import com.groupthree.mancala.repository.StatManager;
 import javafx.animation.PauseTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -95,12 +94,27 @@ public class GameController {
     @FXML
     private Button endGame;
 
+    @FXML
+    private Button playerOneCTPowerUp;
+    @FXML
+    private Button playerTwoCTPowerUp;
+    @FXML
+    private Button playerOneDPPowerUp;
+    @FXML
+    private Button playerTwoDPPowerUp;
+
     private List<Circle> topRow;
     private List<Circle> bottomRow;
 
     private Player player1;
     private Player player2;
-    private final Board board;
+    private Board board;
+
+    private boolean isArcade;
+    private boolean playerOneAppliedDoublePoints;
+    private boolean playerOneAppliedContinueTurn;
+    private boolean playerTwoAppliedDoublePoints;
+    private boolean playerTwoAppliedContinueTurn;
 
     public GameController() {
         this.board = new Board();
@@ -121,9 +135,19 @@ public class GameController {
         updateStones();
         updateScene();
         checkIfWinnerAndUpdateRecord();
+        if (playerOneAppliedDoublePoints) {
+            doublePoints(1);
+            updateStones();
+        }
         if (!board.isPlayerOneTurn() && player2.getUsername().equalsIgnoreCase("computer")) {
             makeComputerMove();
         }
+        if (playerTwoAppliedDoublePoints) {
+            doublePoints(2);
+            updateStones();
+        }
+
+
     }
 
     private void makeComputerMove() {
@@ -157,9 +181,7 @@ public class GameController {
 
 
     private void checkIfWinnerAndUpdateRecord() {
-//        System.out.println("checking for winner");
         if (board.gameOver()) {
-//            System.out.println("winner found");
             String message = "";
             var winner = board.checkWinner();
             if (winner == 1) {
@@ -206,6 +228,64 @@ public class GameController {
         }
     }
 
+    @FXML
+    private void playerOneDoublePoints() {
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, 2)) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Power Up used - Double points");
+        alert.setContentText("Double points will be applied to player 1's next move");
+        alert.showAndWait();
+        playerOneAppliedDoublePoints = true;
+    }
+
+    @FXML
+    private void playerTwoDoublePoints() {
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, 2)) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Power Up used - Double points");
+        alert.setContentText("Double points will be applied to player 2's next move");
+        alert.showAndWait();
+        playerTwoAppliedDoublePoints = true;
+    }
+
+    private void doublePoints(int playerNumber) {
+        if (!isArcade) {
+            return;
+        }
+
+        ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+        if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, playerNumber)) {
+            return;
+        }
+        var pointsGained = this.board.getTurnPoints();
+        System.out.println("points gained " + pointsGained);
+        String message = "";
+        var statManager = StatManager.getInstance();
+        if (playerNumber == 1) {
+            arcadeBoard.boostPointsInStore(1, pointsGained);
+            message = "player 1's " + pointsGained + "points doubled";
+            arcadeBoard.usePowerUp(PowerUp.DOUBLE_POINTS, 1);
+            statManager.updatePowerUpUseCount(PowerUp.DOUBLE_POINTS, 1);
+        }
+
+        if (playerNumber == 2) {
+            arcadeBoard.boostPointsInStore(2, pointsGained);
+            message = "player 2's " + pointsGained + "points doubled";
+            arcadeBoard.usePowerUp(PowerUp.DOUBLE_POINTS, 2);
+            statManager.updatePowerUpUseCount(PowerUp.DOUBLE_POINTS, 1);
+        }
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText(message);
+        a.show();
+        board.resetTurnPoints();
+    }
+
     private void updatePlayerRecords(int winner) {
         var playerOneRecord = player1.getRecord();
         var playerTwoRecord = player2.getRecord();
@@ -226,10 +306,18 @@ public class GameController {
         List<Circle> activeRow;
         int active;
         if (board.isPlayerOneTurn()) {
+            playerOneDPPowerUp.setDisable(false);
+            playerOneCTPowerUp.setDisable(false);
+            playerTwoDPPowerUp.setDisable(true);
+            playerTwoCTPowerUp.setDisable(true);
             inactiveRow = bottomRow;
             activeRow = topRow;
             active = 0;
         } else {
+            playerOneDPPowerUp.setDisable(true);
+            playerOneCTPowerUp.setDisable(true);
+            playerTwoDPPowerUp.setDisable(false);
+            playerTwoCTPowerUp.setDisable(false);
             inactiveRow = topRow;
             activeRow = bottomRow;
             active = 1;
@@ -265,7 +353,18 @@ public class GameController {
                 filledCircle.setOpacity(1.0);
             }
         }
+        if (isArcade) {
+            ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
+            if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, 1)) {
+                playerOneDPPowerUp.setDisable(true);
+            }
+
+            if (arcadeBoard.getPowerUpStatus(PowerUp.DOUBLE_POINTS, 2)) {
+                playerTwoDPPowerUp.setDisable(true);
+            }
+        }
     }
+
 
     private void updateStones() {
         var row1 = board.getGameRows()[0];
@@ -292,8 +391,17 @@ public class GameController {
 
     }
 
-    public void initializeNewGame(Player player1, Player player2) {
+    public void initializeNewGame(Player player1, Player player2, boolean isArcade) {
         endGame.setVisible(false);
+        this.isArcade = isArcade;
+        if (!isArcade) {
+            playerOneCTPowerUp.setVisible(false);
+            playerOneDPPowerUp.setVisible(false);
+            playerTwoCTPowerUp.setVisible(false);
+            playerTwoDPPowerUp.setVisible(false);
+        } else {
+            this.board = new ArcadeBoard();
+        }
         this.player1 = player1;
         this.player2 = player2;
         playerOneUsername.setText(player1.getUsername());

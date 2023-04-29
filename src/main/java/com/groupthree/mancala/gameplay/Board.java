@@ -1,7 +1,6 @@
 package com.groupthree.mancala.gameplay;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -10,7 +9,9 @@ public class Board {
     private final Store player2Store;
     private boolean playerOneTurn;
     private boolean gameOver;
-    List<Stone> stonesInHand = new ArrayList<>();
+    private List<Stone> stonesInHand = new ArrayList<>();
+
+    private int turnPoints = 0;
 
     public Board() {
         playerOneTurn = true;
@@ -23,7 +24,6 @@ public class Board {
                 Stone stone4 = new Stone();
                 Hole hole = new Hole(stone1, stone2, stone3, stone4);
                 row[i] = hole;
-
             }
         }
         player1Store = new Store();
@@ -175,6 +175,7 @@ public class Board {
                     // add stone to player 1 store
                     Stone temp = stonesInHand.remove(0);
                     player1Store.addStoneToStore(temp);
+                    turnPoints++;
                 }
                 // if after adding stone to store we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -190,14 +191,13 @@ public class Board {
                     return;
                 }
             } else {
-//                System.out.println("player 2 turn");
-//                System.out.println("current index " + startIndex);
                 moveAcrossBottomRow(startIndex, bottomRow);
                 // if after going through the entire top row, we still have stones in hand
                 if (stonesInHand.size() > 0) {
                     // add stone to player 2 store
                     Stone temp = stonesInHand.remove(0);
                     player2Store.addStoneToStore(temp);
+                    turnPoints++;
                 }
                 // if after adding stone to store we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -216,10 +216,17 @@ public class Board {
         }
     }
 
+    public void resetTurnPoints() {
+        turnPoints = 0;
+    }
+
     public boolean isPlayerOneTurn() {
         return playerOneTurn;
     }
 
+    public int getTurnPoints() {
+        return turnPoints;
+    }
 
     public void displayBoard() {
         System.out.println("player1Store {" + player1Store.getNumberOfStonesInStore() + "}");
