@@ -10,6 +10,7 @@ import com.groupthree.mancala.models.Player;
 import com.groupthree.mancala.models.PublicInfo;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,16 @@ public class PlayerDeserializer extends StdDeserializer<Player> {
         int numberOfWins = node.get("gamePlayRecord").get("numberOfWins").asInt();
         int numberOfLosses = node.get("gamePlayRecord").get("numberOfLosses").asInt();
         int numberOfGames = node.get("gamePlayRecord").get("numberOfGames").asInt();
+
+        String lastLoggedIn = node.get("lastLoggedIn").asText();
+        String[] dateStringArr = lastLoggedIn.split("T");
+        String dateString = dateStringArr[0];
+        String[] dateParts = dateString.split("-");
+        String year = dateParts[0];
+        String month = dateParts[1];
+        String day = dateParts[2];
+        LocalDate date = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+
         List<PublicInfo> userFavorites = new ArrayList<>();
         for (JsonNode val : node.get("favorites")) {
             String favUsername = val.get("username").asText();
@@ -46,7 +57,7 @@ public class PlayerDeserializer extends StdDeserializer<Player> {
         playRecord.setNumberOfGames(numberOfGames);
         playRecord.setNumberOfWins(numberOfWins);
         playRecord.setNumberOfLosses(numberOfLosses);
-        Player deserializedPlayer = new Player(username, firstname, lastname, profileImage);
+        Player deserializedPlayer = new Player(username, firstname, lastname, profileImage, date);
 
         deserializedPlayer.setApproved(isApproved);
         deserializedPlayer.setFavorites(userFavorites);

@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * PlayerDashboardController is a class that manages click actions on the player dashboard screen
@@ -117,7 +118,7 @@ public class PlayerDashboardController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
                 root = loader.load();
                 GameController gameController = loader.getController();
-                Player computer = new Player("computer", "", "", "");
+                Player computer = new Player("computer", "", "", "", LocalDate.now());
                 gameController.initializeNewGame(player1, computer, isArcade);
                 stage = (Stage) welcomeText.getScene().getWindow();
                 scene = new Scene(root);

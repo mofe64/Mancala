@@ -8,6 +8,7 @@ import com.groupthree.mancala.models.deserializers.PlayerDeserializer;
 import com.groupthree.mancala.models.serializers.AdminSerializer;
 import com.groupthree.mancala.models.serializers.PlayerSerializer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +23,9 @@ public class Admin extends User {
     public Admin(String username,
                  String firstname,
                  String lastname,
-                 String profileImage) {
-        super(username, firstname, lastname, profileImage);
+                 String profileImage,
+                 LocalDate localDate) {
+        super(username, firstname, lastname, profileImage, localDate);
     }
 
 

@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.groupthree.mancala.exceptions.ApplicationException;
 import com.groupthree.mancala.gameplay.PowerUp;
-import com.groupthree.mancala.models.Schema;
+import com.groupthree.mancala.models.Player;
 import com.groupthree.mancala.models.StatSchema;
+import com.groupthree.mancala.models.User;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StatManager {
     public static StatManager INSTANCE;
@@ -31,6 +31,7 @@ public class StatManager {
                 powerUpStats = new HashMap<>();
                 powerUpStats.put(PowerUp.DOUBLE_POINTS, 0);
                 powerUpStats.put(PowerUp.CONTINUE_TURN, 0);
+
             }
         } catch (Exception e) {
             String message = "Could not initialize stats due to \n" + e.getMessage();
@@ -52,6 +53,13 @@ public class StatManager {
 
     public int getPowerUpUseCount(PowerUp powerUp) {
         return powerUpStats.get(powerUp);
+    }
+
+    public List<String> getLastFiveLogins() {
+        var userRepo = UserRepository.getInstance();
+        var allPlayers = userRepo.getPlayers();
+        allPlayers.sort(Comparator.comparing(Player::getLastLogin).reversed());
+        return allPlayers.stream().map(User::getUsername).limit(5).collect(Collectors.toList());
     }
 
     public void writeToFile() {

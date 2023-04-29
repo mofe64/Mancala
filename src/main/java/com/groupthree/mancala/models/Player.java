@@ -9,6 +9,7 @@ import com.groupthree.mancala.gameplay.Board;
 import com.groupthree.mancala.models.deserializers.PlayerDeserializer;
 import com.groupthree.mancala.models.serializers.PlayerSerializer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,10 @@ public class Player extends User {
             String username,
             String firstname,
             String lastname,
-            String profileImage) {
-        super(username, firstname, lastname, profileImage);
+            String profileImage,
+            LocalDate localDate
+    ) {
+        super(username, firstname, lastname, profileImage, localDate);
         this.favorites = new ArrayList<>();
         this.record = new GamePlayRecord();
     }
@@ -55,7 +58,7 @@ public class Player extends User {
     }
 
     public void setApproved(boolean isApproved) {
-        isApproved = isApproved;
+        this.isApproved = isApproved;
     }
 
     public void makeMove(int holeNumber, Board board) {
@@ -72,6 +75,10 @@ public class Player extends User {
 
     public GamePlayRecord getRecord() {
         return record;
+    }
+
+    public LocalDate getLastLogin() {
+        return getProfile().getLastLoggedIn();
     }
 
     @Override

@@ -25,6 +25,7 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -194,7 +195,7 @@ public class RegisterController {
         }
         var userRepo = UserRepository.getInstance();
         if (registrationType.equalsIgnoreCase("Register as Admin")) {
-            Admin admin = new Admin(username, firstname, lastname, userProfileImagePath);
+            Admin admin = new Admin(username, firstname, lastname, userProfileImagePath, LocalDate.now());
             try {
                 userRepo.saveAdmin(admin);
             } catch (UserExistsException e) {
@@ -213,7 +214,7 @@ public class RegisterController {
             stage.show();
 
         } else if (registrationType.equalsIgnoreCase("Register as User")) {
-            Player player = new Player(username, firstname, lastname, userProfileImagePath);
+            Player player = new Player(username, firstname, lastname, userProfileImagePath, LocalDate.now());
 
             try {
                 userRepo.savePlayer(player);

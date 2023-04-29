@@ -1,10 +1,12 @@
 package com.groupthree.mancala.models;
 
+import java.time.LocalDate;
+
 public class User {
     private final Profile profile;
 
-    public User(String username, String firstname, String lastname, String profileImage) {
-        this.profile = new Profile(username, firstname, lastname, profileImage);
+    public User(String username, String firstname, String lastname, String profileImage, LocalDate localDate) {
+        this.profile = new Profile(username, firstname, lastname, profileImage, localDate);
 
     }
 
