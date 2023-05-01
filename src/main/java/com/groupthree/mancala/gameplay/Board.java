@@ -1,16 +1,19 @@
 package com.groupthree.mancala.gameplay;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
-    private final Hole[][] gameRows;
-    private final Store player1Store;
-    private final Store player2Store;
-    private boolean playerOneTurn;
-    private boolean gameOver;
-    List<Stone> stonesInHand = new ArrayList<>();
+    protected final Hole[][] gameRows;
+    protected final Store player1Store;
+    protected final Store player2Store;
+    protected boolean playerOneTurn;
+    protected boolean gameOver;
+    protected List<Stone> stonesInHand = new ArrayList<>();
+    private SpecialStone activeStatus = SpecialStone.NOT_APPLICABLE;
+
+    protected int turnPoints = 0;
 
     public Board() {
         playerOneTurn = true;
@@ -23,7 +26,6 @@ public class Board {
                 Stone stone4 = new Stone();
                 Hole hole = new Hole(stone1, stone2, stone3, stone4);
                 row[i] = hole;
-
             }
         }
         player1Store = new Store();
@@ -42,8 +44,8 @@ public class Board {
         return player2Store;
     }
 
-    private void moveAcrossTopRow(int from, Hole[] topRow) {
-        System.out.println("current index " + from);
+    protected void moveAcrossTopRow(int from, Hole[] topRow) {
+//        System.out.println("current index " + from);
         // get index of the hole we want to remove stones from
         int currentIndex = from;
         // retrieve the hole from the player row
@@ -52,46 +54,92 @@ public class Board {
         if (stonesInHand.isEmpty()) {
             // remove all stones in the current hole and place them in hand
             stonesInHand = hole.removeStones();
+            // If we are in arcade mode and a half hand special stone has been selected
+            if (activeStatus == SpecialStone.HALF_HAND) {
+                var halfValue = stonesInHand.size() / 2;
+                for (int i = 0; i < halfValue; i++) {
+                    var stone = stonesInHand.remove(i);
+                    hole.addStones(stone);
+                }
+            }
             // decrement start index for loop since we have already removed stones from the current hole
             // since we are in the top row, we move counter clock wise, so we decrement
             currentIndex = currentIndex - 1;
         }
-        // since we are in the first row to move counter clock wise, we need to
-        // loop back from the current hole index to 0
-        for (int i = currentIndex; i >= 0; i--) {
-            // get next hole to remove stone from
-            Hole currentHole = topRow[i];
-            // if we have more than one stone in hand
-            if (stonesInHand.size() > 1) {
-                // remove stone from our hand and add to the current hole
-                currentHole.addStones(stonesInHand.remove(0));
-            } else if (stonesInHand.size() == 1) {
-                // if we have only one stone in hand
-                // check to see if the current hole is empty
-                if (currentHole.isEmpty()) {
-                    // if empty add the stone in hand to the hole and end turn
-                    currentHole.addStones(stonesInHand.remove(0));
-                    playerOneTurn = !playerOneTurn;
-                    return;
-                } else {
-                    // if the current hole is not empty add stone to current hole
-                    currentHole.addStones(stonesInHand.remove(0));
-                    // remove all stones from current hole and add to hand
-                    stonesInHand = currentHole.removeStones();
+        if (activeStatus.equals(SpecialStone.REVERSE_TURN)) {
+            // instead of moving counter clock wise, we move clock wise cause of the applied reverse turn
+            for (int i = currentIndex; i < topRow.length; i++) {
+                Hole nextHole = topRow[i];
+                if (stonesInHand.size() > 1) {
+                    nextHole.addStones(stonesInHand.remove(0));
+                } else if (stonesInHand.size() == 1) {
+                    if (nextHole.isEmpty()) {
+                        nextHole.addStones(stonesInHand.remove(0));
+                        playerOneTurn = !playerOneTurn;
+                        return;
+                    } else {
+                        nextHole.addStones(stonesInHand.remove(0));
+                        stonesInHand = nextHole.removeStones();
+                    }
                 }
+            }
+        } else {
+            // since we are in the first row to move counter clock wise, we need to
+            // loop back from the current hole index to 0
+            for (int i = currentIndex; i >= 0; i--) {
+                // get next hole to remove stone from
+                Hole currentHole = topRow[i];
+                // if we have more than one stone in hand
+                if (stonesInHand.size() > 1) {
+                    // remove stone from our hand and add to the current hole
+                    currentHole.addStones(stonesInHand.remove(0));
+                } else if (stonesInHand.size() == 1) {
+                    // if we have only one stone in hand
+                    // check to see if the current hole is empty
+                    if (currentHole.isEmpty()) {
+                        // if empty add the stone in hand to the hole and end turn
+                        currentHole.addStones(stonesInHand.remove(0));
+                        playerOneTurn = !playerOneTurn;
+                        return;
+                    } else {
+                        // if the current hole is not empty add stone to current hole
+                        currentHole.addStones(stonesInHand.remove(0));
+                        // remove all stones from current hole and add to hand
+                        stonesInHand = currentHole.removeStones();
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    public void moveStonesArcade(int from) {
+        Random random = new Random();
+        boolean encounteredSpecialStone = random.nextFloat() < 0.1;
+        if (!encounteredSpecialStone) {
+            moveStones(from);
+        } else {
+            int specialStoneNumber = random.nextInt(3) + 1;
+            if (specialStoneNumber == 1) {
+                activeStatus = SpecialStone.REVERSE_TURN;
+                moveStones(from);
+            } else if (specialStoneNumber == 2) {
+                activeStatus = SpecialStone.HALF_HAND;
+                moveStones(from);
+            } else {
+//                activeStatus = SpecialStoneStatus.SWITCH_SIDES;
+//                moveStones(from);
+
             }
         }
     }
 
-    private void checkIfGameOver() {
-        System.out.println("board checking ......");
+    protected void checkIfGameOver() {
+
         gameOver = true;
         Hole[] topRow = gameRows[0];
         Hole[] bottomRow = gameRows[1];
-        System.out.println("top row");
-        System.out.println(Arrays.toString(topRow));
-        System.out.println("bottom row");
-        System.out.println(Arrays.toString(bottomRow));
         for (Hole hole : topRow) {
             if (!hole.isEmpty()) {
                 gameOver = false;
@@ -99,7 +147,6 @@ public class Board {
             }
         }
         if (gameOver) {
-            System.out.println("Game is over, board check method ...");
             dumpStones(0);
             return;
         }
@@ -111,7 +158,7 @@ public class Board {
             }
         }
         if (gameOver) {
-            System.out.println("Game is over, board check method ...");
+//            System.out.println("Game is over, board check method ...");
             dumpStones(1);
         }
     }
@@ -133,7 +180,7 @@ public class Board {
         }
     }
 
-    private void moveAcrossBottomRow(int from, Hole[] bottomRow) {
+    protected void moveAcrossBottomRow(int from, Hole[] bottomRow) {
         int currentIndex = from;
         // retrieve the hole from the player row
         Hole hole = bottomRow[currentIndex];
@@ -141,32 +188,69 @@ public class Board {
         if (stonesInHand.isEmpty()) {
             // remove all stones in the current hole and place them in hand
             stonesInHand = hole.removeStones();
+            // If we are in arcade mode and a half hand special stone has been selected
+            if (activeStatus.equals(SpecialStone.HALF_HAND)) {
+                var halfValue = stonesInHand.size() / 2;
+                for (int i = 0; i < halfValue; i++) {
+                    var stone = stonesInHand.remove(i);
+                    hole.addStones(stone);
+                }
+
+            }
             // increment start index for loop since we have already removed stones from the current hole
             // since we are in the top row, we move clock wise, so we increment
             currentIndex = currentIndex + 1;
         }
-        // distribute stones across the second row
-        for (int i = currentIndex; i < bottomRow.length; i++) {
-            Hole nextHole = bottomRow[i];
-            if (stonesInHand.size() > 1) {
-                nextHole.addStones(stonesInHand.remove(0));
-            } else if (stonesInHand.size() == 1) {
-                if (nextHole.isEmpty()) {
+        if (activeStatus.equals(SpecialStone.REVERSE_TURN)) {
+            // since we want to move counter clock wise, we need to
+            // loop back from the current hole index to 0
+            for (int i = currentIndex; i >= 0; i--) {
+                // get next hole to remove stone from
+                Hole currentHole = bottomRow[i];
+                // if we have more than one stone in hand
+                if (stonesInHand.size() > 1) {
+                    // remove stone from our hand and add to the current hole
+                    currentHole.addStones(stonesInHand.remove(0));
+                } else if (stonesInHand.size() == 1) {
+                    // if we have only one stone in hand
+                    // check to see if the current hole is empty
+                    if (currentHole.isEmpty()) {
+                        // if empty add the stone in hand to the hole and end turn
+                        currentHole.addStones(stonesInHand.remove(0));
+                        playerOneTurn = !playerOneTurn;
+                        return;
+                    } else {
+                        // if the current hole is not empty add stone to current hole
+                        currentHole.addStones(stonesInHand.remove(0));
+                        // remove all stones from current hole and add to hand
+                        stonesInHand = currentHole.removeStones();
+                    }
+                }
+            }
+        } else {
+            // distribute stones across the second row in the default clock wise manner
+            for (int i = currentIndex; i < bottomRow.length; i++) {
+                Hole nextHole = bottomRow[i];
+                if (stonesInHand.size() > 1) {
                     nextHole.addStones(stonesInHand.remove(0));
-                    playerOneTurn = !playerOneTurn;
-                    return;
-                } else {
-                    nextHole.addStones(stonesInHand.remove(0));
-                    stonesInHand = nextHole.removeStones();
+                } else if (stonesInHand.size() == 1) {
+                    if (nextHole.isEmpty()) {
+                        nextHole.addStones(stonesInHand.remove(0));
+                        playerOneTurn = !playerOneTurn;
+                        return;
+                    } else {
+                        nextHole.addStones(stonesInHand.remove(0));
+                        stonesInHand = nextHole.removeStones();
+                    }
                 }
             }
         }
     }
 
+
     public void moveStones(int from) {
         checkIfGameOver();
         if (gameOver) {
-            System.out.println("Game is over .... from board ");
             return;
         }
         Hole[] topRow = gameRows[0];
@@ -180,6 +264,7 @@ public class Board {
                     // add stone to player 1 store
                     Stone temp = stonesInHand.remove(0);
                     player1Store.addStoneToStore(temp);
+                    turnPoints++;
                 }
                 // if after adding stone to store we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -195,14 +280,13 @@ public class Board {
                     return;
                 }
             } else {
-                System.out.println("player 2 turn");
-                System.out.println("current index " + startIndex);
                 moveAcrossBottomRow(startIndex, bottomRow);
                 // if after going through the entire top row, we still have stones in hand
                 if (stonesInHand.size() > 0) {
                     // add stone to player 2 store
                     Stone temp = stonesInHand.remove(0);
                     player2Store.addStoneToStore(temp);
+                    turnPoints++;
                 }
                 // if after adding stone to store we still have stones in hand
                 if (stonesInHand.size() > 0) {
@@ -221,10 +305,17 @@ public class Board {
         }
     }
 
+    public void resetTurnPoints() {
+        turnPoints = 0;
+    }
+
     public boolean isPlayerOneTurn() {
         return playerOneTurn;
     }
 
+    public int getTurnPoints() {
+        return turnPoints;
+    }
 
     public void displayBoard() {
         System.out.println("player1Store {" + player1Store.getNumberOfStonesInStore() + "}");
@@ -239,6 +330,7 @@ public class Board {
 
 
     public boolean gameOver() {
+        checkIfGameOver();
         return gameOver;
     }
 
@@ -252,6 +344,17 @@ public class Board {
         } else {
             return 2;
         }
+    }
+
+    public void setPlayerOneTurn(boolean val) {
+        this.playerOneTurn = val;
+    }
+
+    public SpecialStone getActiveStatus() {
+        return activeStatus;
+    }
+    public void resetActiveStatus(){
+        activeStatus = SpecialStone.NOT_APPLICABLE;
     }
 
 

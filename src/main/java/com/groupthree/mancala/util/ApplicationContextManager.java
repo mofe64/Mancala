@@ -24,13 +24,6 @@ public class ApplicationContextManager {
         return INSTANCE;
     }
 
-    public Stack<Stage> getStageStack() {
-        return stageStack;
-    }
-
-    public Stack<String> getViewStack() {
-        return viewStack;
-    }
 
     public void addStage(Stage stage) {
         stageStack.add(stage);

@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * PlayerDashboardController is a class that manages click actions on the player dashboard screen
@@ -54,63 +55,91 @@ public class PlayerDashboardController {
     protected void onNewGameButtonClick(ActionEvent event) {
         var userRepo = UserRepository.getInstance();
         MenuItem selectedItem = (MenuItem) event.getSource();
+        String gameMode = "";
         if (selectedItem.getId().equalsIgnoreCase("arcade")) {
             System.out.println("Arcade mode selected ...");
+            gameMode = "Arcade";
         } else if (selectedItem.getId().equalsIgnoreCase("normal")) {
             System.out.println("normal mode selected ...");
-            stage = (Stage) welcomeText.getScene().getWindow();
-
-            Player player1 = userRepo.getPlayer(playerUsername);
-
-            // Show pop up to get player2 details;
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(stage);
-            Label explanation = new Label("Enter the username of the second player");
-            TextField usernameTextField = new TextField();
-            Button startButton = new Button("Start Game");
-            VBox dialogVbox = new VBox(explanation, usernameTextField, startButton);
-            dialogVbox.setSpacing(10);
-            dialogVbox.setPadding(new Insets(20));
-            dialogVbox.setAlignment(Pos.CENTER);
-            startButton.setOnAction(e -> {
-                var secondPlayerUsername = usernameTextField.getText();
-                if (secondPlayerUsername == null || secondPlayerUsername.isEmpty()) {
-                    var alert = new Alert(Alert.AlertType.ERROR, "Please provide the username for the second player");
-                    alert.setTitle("Start Game Error");
-                    alert.showAndWait();
-                }
-                var player2 = userRepo.getPlayer(secondPlayerUsername);
-                if (player2 == null) {
-                    var alert = new Alert(Alert.AlertType.ERROR, "No Player found with that username");
-                    alert.setTitle("Start Game Error");
-                    alert.showAndWait();
-                } else {
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
-                        root = loader.load();
-                        GameController gameController = loader.getController();
-                        gameController.initializeNewGame(player1, player2);
-                        stage = (Stage) welcomeText.getScene().getWindow();
-                        scene = new Scene(root);
-                        stage.setScene(scene);
-                        dialog.close();
-                        stage.show();
-
-                    } catch (Exception exception) {
-                        System.out.println(exception.getMessage());
-                        var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
-                        alert.setTitle("Start Game Error");
-                        alert.showAndWait();
-                    }
-                }
-            });
-
-            Scene dialogScene = new Scene(dialogVbox, 300, 300);
-            dialog.setScene(dialogScene);
-            dialog.show();
+            gameMode = "Normal";
         }
+
+        var isArcade = gameMode.equalsIgnoreCase("arcade");
+
+        stage = (Stage) welcomeText.getScene().getWindow();
+        Player player1 = userRepo.getPlayer(playerUsername);
+        // Show pop up to get player2 details;
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(stage);
+        Label explanation = new Label("Enter the username of the second player");
+        TextField usernameTextField = new TextField();
+        Button startButton = new Button("Start Game");
+        Label helper = new Label("Or");
+        Button startGameWithComputer = new Button("Play against computer");
+        VBox dialogVbox = new VBox(explanation, usernameTextField, startButton, helper, startGameWithComputer);
+        dialogVbox.setSpacing(10);
+        dialogVbox.setPadding(new Insets(20));
+        dialogVbox.setAlignment(Pos.CENTER);
+        startButton.setOnAction(e -> {
+            var secondPlayerUsername = usernameTextField.getText();
+            if (secondPlayerUsername == null || secondPlayerUsername.isEmpty()) {
+                var alert = new Alert(Alert.AlertType.ERROR, "Please provide the username for the second player");
+                alert.setTitle("Start Game Error");
+                alert.showAndWait();
+            }
+            var player2 = userRepo.getPlayer(secondPlayerUsername);
+            if (player2 == null) {
+                var alert = new Alert(Alert.AlertType.ERROR, "No Player found with that username");
+                alert.setTitle("Start Game Error");
+                alert.showAndWait();
+            } else {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
+                    root = loader.load();
+                    GameController gameController = loader.getController();
+                    gameController.initializeNewGame(player1, player2, isArcade);
+                    stage = (Stage) welcomeText.getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    dialog.close();
+                    stage.show();
+
+                } catch (Exception exception) {
+                    System.out.println(exception.getMessage());
+                    var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
+                    alert.setTitle("Start Game Error");
+                    alert.showAndWait();
+                }
+            }
+        });
+        startGameWithComputer.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("game-view.fxml"));
+                root = loader.load();
+                GameController gameController = loader.getController();
+                Player computer = new Player("computer", "", "", "", LocalDate.now());
+                gameController.initializeNewGame(player1, computer, isArcade);
+                stage = (Stage) welcomeText.getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                dialog.close();
+                stage.show();
+
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+                var alert = new Alert(Alert.AlertType.ERROR, "Something went wrong please try again");
+                alert.setTitle("Start Game Error");
+                alert.showAndWait();
+            }
+        });
+
+        Scene dialogScene = new Scene(dialogVbox, 300, 300);
+        dialog.setScene(dialogScene);
+        dialog.show();
+
     }
+
     /**
      * On clicking the 'Profile Button' this will display the player's profile screen
      */
@@ -136,7 +165,18 @@ public class PlayerDashboardController {
      * On clicking the 'Leader Board Button' this will display the Leader board screen
      */
     @FXML
-    protected void onLeaderboardButtonClick() {
+    protected void onLeaderboardButtonClick(ActionEvent event) throws IOException {
         System.out.println("on leaderboard clicked ...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("leaderboard-view.fxml"));
+        root = loader.load();
+        LeaderboardController controller = loader.getController();
+        controller.initializeScreen(playerUsername);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        var context = ApplicationContextManager.getInstance();
+        context.addStage(stage);
+        context.addView("player-dashboard-view.fxml");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -84,6 +84,10 @@
       <Rectangle fx:id="payerTwoStore" arcHeight="5.0" arcWidth="5.0" fill="#4f7496" height="200.0" layoutX="673.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="80.0" />
       <Label fx:id="playerOneStoreValue" layoutX="34.0" layoutY="179.0" text="Label" />
       <Label fx:id="playerTwoStoreValue" layoutX="699.0" layoutY="179.0" text="Label" />
-      <Button fx:id="endGame" layoutX="341.0" layoutY="22.0" mnemonicParsing="false" text="End Game" />
+      <Button fx:id="endGame" layoutX="362.0" layoutY="22.0" mnemonicParsing="false" text="End Game" />
+      <Button fx:id="playerTwoCTPowerUp" layoutX="146.0" layoutY="347.0" mnemonicParsing="false" onAction="#playerTwoContinueTurn" text="Power up: Continue Turn" />
+      <Button fx:id="playerTwoDPPowerUp" layoutX="500.0" layoutY="347.0" mnemonicParsing="false" onAction="#playerTwoDoublePoints" text="Power up: Double Points" />
+      <Button fx:id="playerOneCTPowerUp" layoutX="146.0" layoutY="22.0" mnemonicParsing="false" onAction="#playerOneContinueTurn" text="Power up: Continue Turn" />
+      <Button fx:id="playerOneDPPowerUp" layoutX="500.0" layoutY="22.0" mnemonicParsing="false" onAction="#playerOneDoublePoints" text="Power up: Double Points" />
    </children>
 </AnchorPane>

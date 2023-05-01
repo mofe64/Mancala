@@ -51,7 +51,7 @@ public class AdminProfileController {
         firstname.setText(admin.getProfile().getFirstname());
         lastname.setText(admin.getProfile().getLastname());
         username.setText(admin.getUsername());
-        lastLogin.setText("Last login: " + admin.getProfile().getLastLoggedIn().toLocalDate().toString());
+        lastLogin.setText("Last login: " + admin.getProfile().getLastLoggedIn().toString());
         var profileImageUrl = admin.getProfile().getProfileImage();
         if (!profileImageUrl.isEmpty()) {
             try {

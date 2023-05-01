@@ -65,8 +65,19 @@ public class AdminDashboardController {
     }
 
     @FXML
-    public void onGameStatsClick() {
-
+    public void onGameStatsClick(ActionEvent event) throws IOException {
+        System.out.println("on stats clicked ...");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-stats-view.fxml"));
+        root = loader.load();
+        StatViewController controller = loader.getController();
+        controller.initialize(adminUsername);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        var context = ApplicationContextManager.getInstance();
+        context.addStage(stage);
+        context.addView("admin-dashboard-view.fxml");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
@@ -102,13 +113,4 @@ public class AdminDashboardController {
 
     }
 
-    private void approve() {
-        //I don't know how approve work so here is just print some information
-        System.out.println("User " + " approved");
-        //Approve function code
-    }
-
-    private void addPlayerToList() {
-
-    }
 }

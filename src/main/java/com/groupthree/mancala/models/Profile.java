@@ -1,12 +1,13 @@
 package com.groupthree.mancala.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Profile {
 
     private String firstname;
     private String lastname;
-    private LocalDateTime lastLoggedIn;
+    private LocalDate lastLoggedIn;
 
 
     private String username;
@@ -14,13 +15,13 @@ public class Profile {
     private double winPercentage;
 
 
-    public Profile(String username, String firstname, String lastname, String profileImage) {
+    public Profile(String username, String firstname, String lastname, String profileImage, LocalDate lastLoggedIn) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.profileImage = profileImage;
         this.winPercentage = 0;
-        this.lastLoggedIn = LocalDateTime.now();
+        this.lastLoggedIn = lastLoggedIn;
     }
 
     public String getUsername() {
@@ -59,11 +60,11 @@ public class Profile {
         return new PublicInfo(username, profileImage, winPercentage);
     }
 
-    public LocalDateTime getLastLoggedIn() {
+    public LocalDate getLastLoggedIn() {
         return lastLoggedIn;
     }
 
-    public void setLastLoggedIn(LocalDateTime lastLoggedIn) {
+    public void setLastLoggedIn(LocalDate lastLoggedIn) {
         this.lastLoggedIn = lastLoggedIn;
     }
 

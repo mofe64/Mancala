@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class LoginController {
 
@@ -33,6 +34,7 @@ public class LoginController {
         var userRepo = UserRepository.getInstance();
         var player = userRepo.getPlayer(usernameValue);
         if (player != null) {
+            player.getProfile().setLastLoggedIn(LocalDate.now());
             System.out.println("found player");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("player-dashboard-view.fxml"));
             root = loader.load();
@@ -46,6 +48,7 @@ public class LoginController {
         }
         var admin = userRepo.getAdmin(usernameValue);
         if (admin != null) {
+            admin.getProfile().setLastLoggedIn(LocalDate.now());
             System.out.println("found admin");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-dashboard-view.fxml"));
             root = loader.load();

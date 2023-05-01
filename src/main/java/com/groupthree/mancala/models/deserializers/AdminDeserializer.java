@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.groupthree.mancala.models.Admin;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Arrays;
 
 public class AdminDeserializer extends StdDeserializer<Admin> {
 
@@ -26,8 +28,16 @@ public class AdminDeserializer extends StdDeserializer<Admin> {
         String lastname = node.get("lastname").asText();
         String username = node.get("username").asText();
         String profileImage = node.get("profileImage").asText();
+        String lastLoggedIn = node.get("lastLoggedIn").asText();
+        String[] dateStringArr = lastLoggedIn.split("T");
+        String dateString = dateStringArr[0];
+        String[] dateParts = dateString.split("-");
+        String year = dateParts[0];
+        String month = dateParts[1];
+        String day = dateParts[2];
+        LocalDate date = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+        return new Admin(username, firstname, lastname, profileImage, date);
 
-        return new Admin(username, firstname, lastname, profileImage);
 
 
     }

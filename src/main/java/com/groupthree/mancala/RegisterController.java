@@ -25,6 +25,7 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -192,17 +193,34 @@ public class RegisterController {
             alert.showAndWait();
             return;
         }
-
+        var userRepo = UserRepository.getInstance();
         if (registrationType.equalsIgnoreCase("Register as Admin")) {
-            Admin admin = new Admin(username, firstname, lastname, userProfileImagePath);
+            Admin admin = new Admin(username, firstname, lastname, userProfileImagePath, LocalDate.now());
+            try {
+                userRepo.saveAdmin(admin);
+            } catch (UserExistsException e) {
+                var alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                alert.setTitle("Admin Registration Error");
+                alert.showAndWait();
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-dashboard-view.fxml"));
+            root = loader.load();
+            AdminDashboardController controller = loader.getController();
+            controller.initializeScreen(admin.getUsername());
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         } else if (registrationType.equalsIgnoreCase("Register as User")) {
-            Player player = new Player(username, firstname, lastname, userProfileImagePath);
-            var userRepo = UserRepository.getInstance();
+            Player player = new Player(username, firstname, lastname, userProfileImagePath, LocalDate.now());
+
             try {
                 userRepo.savePlayer(player);
             } catch (UserExistsException e) {
                 var alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                alert.setTitle("Registration Error");
+                alert.setTitle("Player Registration Error");
                 alert.showAndWait();
                 return;
             }

@@ -77,13 +77,14 @@ public class PlayerProfileController {
         }
 
         this.noOfGames.setText("Games played: " + playerRecord.getNumberOfGames());
+        //Todo (set win percentage to two decimal places)
         double winPercentage = playerRecord.getNumberOfGames() == 0 ? 0.0
                 : (double) (playerRecord.getNumberOfWins() * 100) / playerRecord.getNumberOfGames();
 
         this.winPercentage.setText("Win percentage: " + winPercentage);
 
         lastLogin.setText("Last Login: " +
-                player.getProfile().getLastLoggedIn().toLocalDate().toString());
+                player.getProfile().getLastLoggedIn().toString());
 
         var playerFavorites = player.getFavorites();
         ObservableList<PublicInfo> favoritesList = FXCollections.observableArrayList();
