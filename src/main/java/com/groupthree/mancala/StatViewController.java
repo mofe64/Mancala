@@ -1,6 +1,7 @@
 package com.groupthree.mancala;
 
 import com.groupthree.mancala.gameplay.PowerUp;
+import com.groupthree.mancala.gameplay.SpecialStone;
 import com.groupthree.mancala.repository.StatManager;
 import com.groupthree.mancala.util.ApplicationContextManager;
 import javafx.fxml.FXML;
@@ -39,9 +40,9 @@ public class StatViewController {
     public void initialize(String adminUsername) {
         this.adminUsername = adminUsername;
         var statManager = StatManager.getInstance();
-        halfHand.setText("Half Hand : " + 0);
-        reverseTurn.setText("Reverse Turn : " + 0);
-        switchSides.setText("Switch Sides : " + 0);
+        halfHand.setText("Half Hand : " + statManager.getSpecialStoneUseCount(SpecialStone.HALF_HAND));
+        reverseTurn.setText("Reverse Turn : " + statManager.getSpecialStoneUseCount(SpecialStone.REVERSE_TURN));
+        switchSides.setText("Switch Sides : " + statManager.getSpecialStoneUseCount(SpecialStone.SWITCH_SIDES));
         continueTurn.setText("Continue Turn : " + statManager.getPowerUpUseCount(PowerUp.CONTINUE_TURN));
         doublePoints.setText("Double Points : " + statManager.getPowerUpUseCount(PowerUp.DOUBLE_POINTS));
         username1.setAlignment(Pos.CENTER);

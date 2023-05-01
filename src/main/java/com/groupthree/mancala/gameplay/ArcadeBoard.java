@@ -7,9 +7,12 @@ public class ArcadeBoard extends Board {
     private Map<PowerUp, Boolean> playerOnePowerUps;
     private Map<PowerUp, Boolean> playerTwoPowerUps;
 
+    private SpecialStone activeStatus;
+
 
     public ArcadeBoard() {
         super();
+        activeStatus = SpecialStone.NOT_APPLICABLE;
         playerOnePowerUps = new HashMap<>();
         playerOnePowerUps.put(PowerUp.DOUBLE_POINTS, false);
         playerOnePowerUps.put(PowerUp.CONTINUE_TURN, false);

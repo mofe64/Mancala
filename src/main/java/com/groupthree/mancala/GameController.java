@@ -122,6 +122,8 @@ public class GameController {
 
     @FXML
     private void moveMade(MouseEvent event) {
+        System.out.println("before making move");
+        System.out.println(board.getActiveStatus());
         Circle hole = (Circle) event.getSource();
         String id = hole.getId();
         switch (id) {
@@ -135,7 +137,6 @@ public class GameController {
         updateStones();
         updateScene();
         checkIfWinnerAndUpdateRecord();
-        System.out.println("before calling continue turn " + board.isPlayerOneTurn());
         if (playerOneAppliedDoublePoints) {
             doublePoints(1);
             updateStones();
@@ -155,7 +156,18 @@ public class GameController {
             continueTurn(2);
             updateScene();
         }
-        System.out.println("after calling continue turn " + board.isPlayerOneTurn());
+        System.out.println("after making move");
+        System.out.println(board.getActiveStatus());
+        if (isArcade) {
+            if (!board.getActiveStatus().equals(SpecialStone.NOT_APPLICABLE)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Special Stone found");
+                alert.setContentText(" Special Stone " + board.getActiveStatus() + " Applied");
+                StatManager.getInstance().updateSpecialStoneUseCount(board.getActiveStatus(), 1);
+                alert.show();
+                board.resetActiveStatus();
+            }
+        }
 
     }
 
@@ -498,7 +510,12 @@ public class GameController {
 
     private void makeMove(int holeNumber) {
         System.out.println("make move called with " + holeNumber);
-        board.moveStones(holeNumber);
+        if (!isArcade) {
+            board.moveStones(holeNumber);
+        } else {
+            board.moveStonesArcade(holeNumber);
+        }
+
     }
 
 
