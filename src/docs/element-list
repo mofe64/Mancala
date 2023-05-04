@@ -1,0 +1,9 @@
+module:com.groupthree.mancala
+com.groupthree.mancala
+com.groupthree.mancala.exceptions
+com.groupthree.mancala.gameplay
+com.groupthree.mancala.models
+com.groupthree.mancala.models.deserializers
+com.groupthree.mancala.models.serializers
+com.groupthree.mancala.repository
+com.groupthree.mancala.util

@@ -14,7 +14,7 @@ import java.io.IOException;
  * contains the start method which launches the application
  * @author mofe, yebo
  * */
-public class MancalaApplication extends Application {
+public class Main extends Application {
     /**
      * The start method is used to initialize the application.
      * It loads the start view and stage
@@ -25,7 +25,7 @@ public class MancalaApplication extends Application {
     public void start(Stage stage) throws IOException {
         UserRepository.getInstance();
         StatManager.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(MancalaApplication.class.getResource("start-screen-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-screen-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Group 3");
         stage.setScene(scene);
