@@ -14,17 +14,45 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This class is responsible for deserializing a JSON representation of a player into a Player object.
+ * The deserialization process extracts information from the JSON tree and sets the corresponding fields of a Player object
+ * and returns the deserialized Player object.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class PlayerDeserializer extends StdDeserializer<Player> {
+    /**
+     * Constructs a PlayerDeserializer instance.
+     *
+     * @param vc The class to be deserialized.
+     */
     protected PlayerDeserializer(Class<?> vc) {
         super(vc);
     }
 
+    /**
+     * Constructs a PlayerDeserializer instance.
+     * It calls the other constructor with a null argument.
+     */
     protected PlayerDeserializer() {
         this(null);
     }
 
+    /**
+     * Deserializes a JSON representation of a player into a Player object.
+     * The deserialization process extracts information from the JSON tree and sets the corresponding fields of a Player object
+     * and returns the deserialized Player object.
+     *
+     * @param jsonParser             The JsonParser used for deserialization.
+     * @param deserializationContext The DeserializationContext used for deserialization.
+     * @return The deserialized Player object.
+     * @throws IOException If an I/O error occurs while parsing the JSON data.
+     */
     @Override
-    public Player deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+    public Player deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String firstname = node.get("firstname").asText();
         String lastname = node.get("lastname").asText();

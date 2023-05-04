@@ -9,16 +9,39 @@ import com.groupthree.mancala.models.PublicInfo;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Serializer class for Player objects. Serializes an Player object into JSON format.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class PlayerSerializer extends StdSerializer<Player> {
 
+    /**
+     * Default constructor for the PlayerSerializer class.
+     */
     public PlayerSerializer() {
         this(null);
     }
 
+    /**
+     * Constructor for the PlayerSerializer class.
+     *
+     * @param p the Class of the Player object to be serialized
+     */
     public PlayerSerializer(Class<Player> p) {
         super(p);
     }
 
+
+    /**
+     * Serializes a Player object into JSON format.
+     *
+     * @param player             the Player object to be serialized
+     * @param jsonGenerator      the JSON generator object
+     * @param serializerProvider the serializer provider object
+     * @throws IOException if an I/O error occurs during serialization
+     */
     @Override
     public void serialize(Player player, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();

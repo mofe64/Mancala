@@ -123,7 +123,7 @@ public class GameController {
     @FXML
     private void moveMade(MouseEvent event) {
         System.out.println("before making move");
-        System.out.println(board.getActiveStatus());
+        System.out.println(board.getActiveStone());
         Circle hole = (Circle) event.getSource();
         String id = hole.getId();
         switch (id) {
@@ -157,15 +157,15 @@ public class GameController {
             updateScene();
         }
         System.out.println("after making move");
-        System.out.println(board.getActiveStatus());
+        System.out.println(board.getActiveStone());
         if (isArcade) {
-            if (!board.getActiveStatus().equals(SpecialStone.NOT_APPLICABLE)) {
+            if (!board.getActiveStone().equals(SpecialStone.NOT_APPLICABLE)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Special Stone found");
-                alert.setContentText(" Special Stone " + board.getActiveStatus() + " Applied");
-                StatManager.getInstance().updateSpecialStoneUseCount(board.getActiveStatus(), 1);
+                alert.setContentText(" Special Stone " + board.getActiveStone() + " Applied");
+                StatManager.getInstance().updateSpecialStoneUseCount(board.getActiveStone(), 1);
                 alert.show();
-                board.resetActiveStatus();
+                board.resetActiveStone();
             }
         }
 
@@ -227,25 +227,7 @@ public class GameController {
                 hole.setDisable(true);
                 hole.setOpacity(0.3);
             });
-            endGame.setVisible(true);
-            endGame.setOnAction(e -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("player-dashboard-view.fxml"));
-                    Parent root = loader.load();
-                    PlayerDashboardController controller = loader.getController();
-                    controller.setWelcomeText(player1.getUsername());
-                    Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (Exception exception) {
-                    var errorAlert = new Alert(Alert.AlertType.ERROR, "Looks like something went wrong," +
-                            " please try again");
-                    errorAlert.setTitle("End Game Error");
-                    errorAlert.showAndWait();
-                }
 
-            });
         }
     }
 
@@ -475,7 +457,23 @@ public class GameController {
     }
 
     public void initializeNewGame(Player player1, Player player2, boolean isArcade) {
-        endGame.setVisible(false);
+        endGame.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("player-dashboard-view.fxml"));
+                Parent root = loader.load();
+                PlayerDashboardController controller = loader.getController();
+                controller.setWelcomeText(player1.getUsername());
+                Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception exception) {
+                var errorAlert = new Alert(Alert.AlertType.ERROR, "Looks like something went wrong," +
+                        " please try again");
+                errorAlert.setTitle("End Game Error");
+                errorAlert.showAndWait();
+            }
+        });
         this.isArcade = isArcade;
         if (!isArcade) {
             playerOneCTPowerUp.setVisible(false);
