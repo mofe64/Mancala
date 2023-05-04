@@ -29,6 +29,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The RegisterController class is responsible for handling the actions of the register screen,
+ * such as attempting to register the user and redirecting them to the appropriate dashboard.
+ * It also provides a method for redirecting to the login screen.
+ *
+ * @author Ope, mofe
+ * @version 1.0
+ */
 public class RegisterController {
     @FXML
     private VBox base;
@@ -42,6 +50,13 @@ public class RegisterController {
     private Scene scene;
     private Parent root;
 
+    /**
+     * Initializes the registration screen with all the necessary components and styling.
+     * method must be called before navigating to the registration screen
+     *
+     * @param stage The stage on which the screen will be displayed.
+     * @throws IOException If there is an error during file handling.
+     */
     public void initializeScreen(Stage stage) throws IOException {
         // Create Components
         Text userLabel = new Text("Username");
@@ -174,6 +189,15 @@ public class RegisterController {
         return new Pair<>(errorEncountered, errorMessage);
     }
 
+    /**
+     * Attempts to register the user with the provided details
+     * If a player or admin account with that username is found, an error alert is provided
+     * If no user is found with the provided username and the provided details are valid,
+     * the user is registered successfully
+     *
+     * @param event The action event that triggered the login attempt
+     * @throws IOException if the FXML loader encounters an error while loading the dashboard view
+     */
     private void attemptRegister(ActionEvent event) throws IOException {
         String registrationType = comboBox.getValue();
         String username = usernameField.getText();
@@ -236,6 +260,12 @@ public class RegisterController {
     }
 
 
+    /**
+     * Redirects the user to the login screen.
+     *
+     * @param event The action event that triggered the redirection to the register screen
+     * @throws IOException if the FXML loader encounters an error while loading the register view
+     */
     private void goToLogin(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
         root = loader.load();

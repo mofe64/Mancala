@@ -24,6 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * GameController class represents the controller for the Connect Four game. It is responsible for controlling the game flow
+ * and updating the view based on the user's actions.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class GameController {
     @FXML
     private Label row1hole1Value;
@@ -116,10 +123,18 @@ public class GameController {
     private boolean playerTwoAppliedDoublePoints;
     private boolean playerTwoAppliedContinueTurn;
 
+    /**
+     * The constructor for the GameController class. Initializes the Board object used for the game.
+     */
     public GameController() {
         this.board = new Board();
     }
 
+    /**
+     * Handles the user's move and updates the view accordingly.
+     *
+     * @param event The MouseEvent triggered by the user's click on a hole.
+     */
     @FXML
     private void moveMade(MouseEvent event) {
         System.out.println("before making move");
@@ -171,6 +186,9 @@ public class GameController {
 
     }
 
+    /**
+     * Handles the computer's move in the Connect Four game.
+     */
     private void makeComputerMove() {
         playerTwoUsername.setText("Computer Playing ... ");
         Random random = new Random();
@@ -200,6 +218,11 @@ public class GameController {
         delay.play();
     }
 
+    /**
+     * Checks if the game is over and updates the player records accordingly. If the game is over,
+     * an alert is displayed to show the winner or if it's a draw. The holes are disabled and
+     * their opacities are changed to indicate the end of the game.
+     */
 
     private void checkIfWinnerAndUpdateRecord() {
         if (board.gameOver()) {
@@ -231,6 +254,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Activates the double points power up for player 1, displaying an alert message to confirm
+     * that the power up was used. Sets playerOneAppliedDoublePoints to true to indicate that the
+     * power up has been used.
+     */
     @FXML
     private void playerOneDoublePoints() {
         ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
@@ -244,6 +272,11 @@ public class GameController {
         playerOneAppliedDoublePoints = true;
     }
 
+    /**
+     * Activates the double points power up for player 2, displaying an alert message to confirm
+     * that the power up was used. Sets playerTwoAppliedDoublePoints to true to indicate that the
+     * power up has been used.
+     */
     @FXML
     private void playerTwoDoublePoints() {
         ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
@@ -257,6 +290,11 @@ public class GameController {
         playerTwoAppliedDoublePoints = true;
     }
 
+    /**
+     * Activates the continue turn power up for player 1, displaying an alert message to confirm
+     * that the power up was used. Sets playerOneAppliedContinueTurn to true to indicate that the
+     * power up has been used.
+     */
     @FXML
     private void playerOneContinueTurn() {
         ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
@@ -270,6 +308,11 @@ public class GameController {
         playerOneAppliedContinueTurn = true;
     }
 
+    /**
+     * Activates the continue turn power up for player 2, displaying an alert message to confirm
+     * that the power up was used. Sets playerTwoAppliedContinueTurn to true to indicate that the
+     * power up has been used.
+     */
     @FXML
     private void playerTwoContinueTurn() {
         ArcadeBoard arcadeBoard = (ArcadeBoard) this.board;
@@ -284,6 +327,12 @@ public class GameController {
 
     }
 
+    /**
+     * Doubles the points gained by a player in arcade mode and updates the power-up use count for double points.
+     * If the game is not in arcade mode or the player already used a double points power-up, the method returns without taking any action.
+     *
+     * @param playerNumber the number of the player whose points are being doubled (1 or 2)
+     */
     private void doublePoints(int playerNumber) {
         if (!isArcade) {
             return;
@@ -316,6 +365,12 @@ public class GameController {
         board.resetTurnPoints();
     }
 
+    /**
+     * Gives the player an extra turn in arcade mode and updates the power-up use count for continue turn.
+     * If the game is not in arcade mode or the player already used a continue turn power-up, the method returns without taking any action.
+     *
+     * @param playerNumber the number of the player who is getting an extra turn (1 or 2)
+     */
     private void continueTurn(int playerNumber) {
         if (!isArcade) {
             return;
@@ -342,6 +397,7 @@ public class GameController {
         a.setContentText(message);
         a.show();
     }
+
 
     private void updatePlayerRecords(int winner) {
         var playerOneRecord = player1.getRecord();
@@ -456,6 +512,13 @@ public class GameController {
 
     }
 
+    /**
+     * Initializes a new game with the provided player objects and game type.
+     *
+     * @param player1  the first player
+     * @param player2  the second player
+     * @param isArcade whether the game is in arcade mode or traditional mode
+     */
     public void initializeNewGame(Player player1, Player player2, boolean isArcade) {
         endGame.setOnAction(e -> {
             try {

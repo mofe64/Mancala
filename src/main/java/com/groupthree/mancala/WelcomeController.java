@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/** WelcomeController is a class that manages click actions on the start screen
+/**
+ * WelcomeController is a class that manages click actions on the start screen
+ *
  * @author Yebo Ajakpo
  * @version 1.0
  */
@@ -20,9 +22,8 @@ public class WelcomeController {
     private Parent root;
 
 
-
-    /** On clicking the 'Login Button' this will capture the user login credentials,
-     * authenticate it before giving authorization
+    /**
+     * On clicking the 'Login Button' this will navigate to the login screen
      */
     @FXML
     public void login(ActionEvent event) throws IOException {
@@ -35,7 +36,8 @@ public class WelcomeController {
         stage.show();
     }
 
-    /** On clicking the 'Sign Up Button' this will capture the user details and save it.
+    /**
+     * On clicking the 'Sign Up Button' this will navigate to the register screen
      */
     @FXML
     public void register(ActionEvent event) throws IOException {

@@ -27,6 +27,12 @@ import javafx.util.Pair;
 import java.io.File;
 import java.net.MalformedURLException;
 
+
+/**
+ * This is the controller for Player profile.
+ *
+ * @author Oluawadara
+ */
 public class PlayerProfileController {
 
     @FXML
@@ -51,6 +57,11 @@ public class PlayerProfileController {
     @FXML
     Button back;
 
+    /***
+     * This method is used to initialize the player profile screen,
+     * it populates the player details into the forms and sets the player profile image
+     * @param username the username of the currently logged in player
+     * **/
     public void setUpProfile(String username) {
         this.playerUsername = username;
         var userRepo = UserRepository.getInstance();
@@ -77,7 +88,6 @@ public class PlayerProfileController {
         }
 
         this.noOfGames.setText("Games played: " + playerRecord.getNumberOfGames());
-        //Todo (set win percentage to two decimal places)
         double winPercentage = playerRecord.getNumberOfGames() == 0 ? 0.0
                 : (double) (playerRecord.getNumberOfWins() * 100) / playerRecord.getNumberOfGames();
 
@@ -105,6 +115,10 @@ public class PlayerProfileController {
 
     }
 
+    /***
+     * This method is used to go back to the previous screen
+     * it is mapped to the back button
+     * **/
     @FXML
     private void goBack() {
         try {
@@ -125,6 +139,10 @@ public class PlayerProfileController {
         }
     }
 
+    /***
+     * This method is used to update the players details
+     * it is mapped to the Update Profile Details button
+     * **/
     @FXML
     private void updateUserDetails() {
         var playerDetails = UserRepository.getInstance().getPlayer(playerUsername);
@@ -149,6 +167,7 @@ public class PlayerProfileController {
         }
     }
 
+    // utility method used to validate the update operation of the user profile
     private Pair<Boolean, String> validate(String usernameValue, String firstnameValue, String lastnameValue) {
         var errorEncountered = false;
         var errorMessage = "";
@@ -174,6 +193,10 @@ public class PlayerProfileController {
     }
 
 
+    /***
+     * This method is used to update the player profile image
+     * it is mapped to the Update Profile Picture button
+     * **/
     @FXML
     private void updateProfileImage(ActionEvent event) throws MalformedURLException {
         var admin = UserRepository.getInstance().getPlayer(playerUsername);

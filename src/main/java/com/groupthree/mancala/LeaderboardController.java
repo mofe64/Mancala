@@ -1,7 +1,6 @@
 package com.groupthree.mancala;
 
 import com.groupthree.mancala.models.Player;
-import com.groupthree.mancala.models.PublicInfo;
 import com.groupthree.mancala.repository.UserRepository;
 import com.groupthree.mancala.util.ApplicationContextManager;
 import com.groupthree.mancala.util.LeaderboardProfileCell;
@@ -20,10 +19,18 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 
 import javax.imageio.ImageIO;
-
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * The LeaderboardController class manages the leaderboard screen, which displays a list of players in
+ * descending order of their scores. It allows the logged-in player to take a screenshot of the screen
+ * and go back to the previous screen.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class LeaderboardController {
 
     @FXML
@@ -41,6 +48,12 @@ public class LeaderboardController {
     private String playerUsername;
 
 
+    /**
+     * Initializes the leaderboard screen with the username of the logged-in player, retrieves the player's
+     * data from the UserRepository, and populates the leaderboard with data from the leaderboard database.
+     *
+     * @param username the username of the logged-in player.
+     */
     public void initializeScreen(String username) {
         this.playerUsername = username;
         var loggedInPlayer = UserRepository.getInstance().getPlayer(username);
@@ -53,6 +66,9 @@ public class LeaderboardController {
     }
 
 
+    /**
+     * Navigates back to the previous screen when the back button is pressed.
+     */
     @FXML
     private void goBack() {
         try {
@@ -71,6 +87,10 @@ public class LeaderboardController {
         }
     }
 
+    /**
+     * Takes a screenshot of the leaderboard screen and saves it as "screenshot.png". Displays an alert message
+     * to inform the user that the screenshot was successful.
+     */
     @FXML
     private void takeScreenShot() {
         WritableImage image = root.snapshot(new SnapshotParameters(), null);
