@@ -8,17 +8,40 @@ import com.groupthree.mancala.models.Player;
 
 import java.io.IOException;
 
+
+/**
+ * Serializer class for Admin objects. Serializes an Admin object into JSON format.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class AdminSerializer extends StdSerializer<Admin> {
 
 
+    /**
+     * Default constructor for the AdminSerializer class.
+     */
     public AdminSerializer() {
         this(null);
     }
 
+    /**
+     * Constructor for the AdminSerializer class.
+     *
+     * @param a the Class of the Admin object to be serialized
+     */
     public AdminSerializer(Class<Admin> a) {
         super(a);
     }
 
+    /**
+     * Serializes an Admin object into JSON format.
+     *
+     * @param admin              the Admin object to be serialized
+     * @param jsonGenerator      the JSON generator object
+     * @param serializerProvider the serializer provider object
+     * @throws IOException if an I/O error occurs during serialization
+     */
     @Override
     public void serialize(Admin admin, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();

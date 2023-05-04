@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.WritableImage;
@@ -76,6 +77,10 @@ public class LeaderboardController {
         File file = new File("screenshot.png");
         try {
             ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Screenshot successful");
+            alert.setContentText("Screenshot has been taken successfully and saved as screenshot.png");
+            alert.showAndWait();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
