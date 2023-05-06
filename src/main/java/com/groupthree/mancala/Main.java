@@ -9,18 +9,34 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+/***
+ * The driver class for the application
+ * contains the start method which launches the application
+ * @author mofe, yebo
+ * */
+public class Main extends Application {
+    /**
+     * The start method is used to initialize the application.
+     * It loads the start view and stage
+     *
+     * @param stage the stage for the application
+     **/
     @Override
     public void start(Stage stage) throws IOException {
         UserRepository.getInstance();
         StatManager.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("start-screen-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("start-screen-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Group 3");
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * The stop method is called whenever the application is closing
+     * This method is used to write the content of our user repo and stat manager to their
+     * respective files
+     **/
     @Override
     public void stop() {
         System.out.println("Stage is closing");
@@ -30,6 +46,9 @@ public class HelloApplication extends Application {
         statManager.writeToFile();
     }
 
+    /***
+     * The main method for the application
+     * */
     public static void main(String[] args) {
         launch();
     }

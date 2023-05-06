@@ -14,6 +14,12 @@ import javafx.scene.control.Label;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the statistics view screen.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class StatViewController {
     @FXML
     private Label halfHand;
@@ -37,6 +43,11 @@ public class StatViewController {
     private Label username5;
     private String adminUsername;
 
+    /**
+     * Initializes the statistics view screen with the administrator's username and the required statistics information.
+     *
+     * @param adminUsername the username of the administrator accessing the screen.
+     */
     public void initialize(String adminUsername) {
         this.adminUsername = adminUsername;
         var statManager = StatManager.getInstance();
@@ -60,7 +71,9 @@ public class StatViewController {
         }
     }
 
-
+    /**
+     * Navigates back to the previous screen when the back button is pressed.
+     */
     public void goBack() {
         try {
             var context = ApplicationContextManager.getInstance();

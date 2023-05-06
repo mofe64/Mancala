@@ -74,7 +74,7 @@ public class AdminDashboardController {
     }
 
     /**
-     * This is the method for handel the Game Stats button.
+     * This is the method for handle the Game Stats button.
      * When click this button will go to the Game Stats scene
      *
      * @param event the {@link ActionEvent}

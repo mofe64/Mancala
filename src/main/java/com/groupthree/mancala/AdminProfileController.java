@@ -22,6 +22,11 @@ import javafx.util.Pair;
 import java.io.File;
 import java.net.MalformedURLException;
 
+/**
+ * This is the controller for Admin profile.
+ *
+ * @author Mofe
+ */
 public class AdminProfileController {
 
     @FXML
@@ -46,6 +51,11 @@ public class AdminProfileController {
     private String adminUsername;
 
 
+    /***
+     * This method is used to initialize the admin profile screen,
+     * it populates the admin details into the forms and sets the admin profile image
+     * @param admin the admin currently logged in
+     * **/
     public void setUp(Admin admin) {
         adminUsername = admin.getUsername();
         firstname.setText(admin.getProfile().getFirstname());
@@ -68,6 +78,10 @@ public class AdminProfileController {
         }
     }
 
+    /***
+     * This method is used to update the admins details
+     * it is mapped to the update button
+     * **/
     @FXML
     private void updateUserDetails() {
         var adminDetails = UserRepository.getInstance().getAdmin(adminUsername);
@@ -93,6 +107,7 @@ public class AdminProfileController {
 
     }
 
+    // utility method used to validate the update operation of the user profile
     private Pair<Boolean, String> validate(String usernameValue, String firstnameValue, String lastnameValue) {
         var errorEncountered = false;
         var errorMessage = "";
@@ -117,24 +132,40 @@ public class AdminProfileController {
         return new Pair<>(errorEncountered, errorMessage);
     }
 
+    /***
+     * This method is used to update the admins profile image
+     * it is mapped to the Change Profile Image button
+     * **/
     @FXML
     private void updateProfileImage(ActionEvent event) throws MalformedURLException {
         var admin = UserRepository.getInstance().getAdmin(adminUsername);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // create a file chooser
         FileChooser fileChooser = new FileChooser();
+        // retrieve the selected file from the dialog
         File selectedFile = fileChooser.showOpenDialog(stage);
+        // if the user selected a file
         if (selectedFile != null) {
+            // get the absolute path to the selected file
             var userProfileImagePath = selectedFile.getAbsolutePath();
+            // update the profile image of the admin
             admin.getProfile().setProfileImage(userProfileImagePath);
+            // get the url
             var x = selectedFile.toURI().toURL().toExternalForm();
+            // create a new image from the url
             Image image = new Image(x);
             profilePicture.setImage(image);
+            // show success alert dialog
             var alert = new Alert(Alert.AlertType.INFORMATION, "Profile Image updated successfully");
             alert.setTitle("Success");
             alert.showAndWait();
         }
     }
 
+    /***
+     * This method is used to go back to the previous screen
+     * it is mapped to the back button
+     * **/
     @FXML
     public void goBack() {
         try {

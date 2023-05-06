@@ -15,6 +15,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 
+
+/**
+ * The LoginController class is responsible for handling the actions of the login screen,
+ * such as attempting to log in the user and redirecting them to the appropriate dashboard.
+ * It also provides a method for redirecting to the register screen.
+ *
+ * @author mofe
+ * @version 1.0
+ */
 public class LoginController {
 
     private Stage stage;
@@ -28,6 +37,14 @@ public class LoginController {
     @FXML
     Button loginButton;
 
+    /**
+     * Attempts to log in the user with the provided username.
+     * If a player or admin account with that username is found, the user is redirected to the appropriate dashboard.
+     * If no user is found with the provided username, an error alert is displayed.
+     *
+     * @param event The action event that triggered the login attempt
+     * @throws IOException if the FXML loader encounters an error while loading the dashboard view
+     */
     @FXML
     public void attemptLogin(ActionEvent event) throws IOException {
         String usernameValue = username.getText();
@@ -66,6 +83,12 @@ public class LoginController {
 
     }
 
+    /**
+     * Redirects the user to the register screen.
+     *
+     * @param event The action event that triggered the redirection to the register screen
+     * @throws IOException if the FXML loader encounters an error while loading the register view
+     */
     @FXML
     public void goToRegister(ActionEvent event) throws IOException {
         System.out.println("going to register ...");

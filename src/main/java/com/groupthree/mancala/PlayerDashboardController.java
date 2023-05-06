@@ -22,8 +22,7 @@ import java.time.LocalDate;
 /**
  * PlayerDashboardController is a class that manages click actions on the player dashboard screen
  *
- * @author Yebo Ajakpo
- * @author Mofe
+ * @author Yebo Ajakpo, Mofe
  * @version 2.0
  */
 public class PlayerDashboardController {
@@ -43,14 +42,20 @@ public class PlayerDashboardController {
 
     private String playerUsername;
 
+
     /**
-     * On clicking the 'New Game Button' this will display the new game menu
-     */
+     * This method initializes the player dashboard
+     *
+     * @param playerUsername the username of the logged in player
+     **/
     public void setWelcomeText(String playerUsername) {
         this.playerUsername = playerUsername;
         welcomeText.setText("Welcome " + playerUsername);
     }
 
+    /**
+     * On clicking the 'New Game Button' this will display the new game menu
+     */
     @FXML
     protected void onNewGameButtonClick(ActionEvent event) {
         var userRepo = UserRepository.getInstance();
@@ -141,7 +146,7 @@ public class PlayerDashboardController {
     }
 
     /**
-     * On clicking the 'Profile Button' this will display the player's profile screen
+     * On clicking the 'Profile Button' this will navigate to the player profile's screen
      */
     @FXML
     protected void onProfileButtonClick(ActionEvent event) throws IOException {
